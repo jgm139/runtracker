@@ -1,5 +1,5 @@
 //
-//  HistoryTableViewController.swift
+//  OptionsTableViewController.swift
 //  RunTracker
 //
 //  Created by Julia García Martínez on 17/02/2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HistoryTableViewController: UITableViewController {
+class OptionsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

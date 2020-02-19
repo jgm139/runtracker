@@ -2,12 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "sport-2.png",
+      "filename" : "smartwatch-2.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "sport.png",
       "scale" : "2x"
     },
     {

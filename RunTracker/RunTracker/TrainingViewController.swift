@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 import CoreMotion
+import CoreData
 
 class TrainingViewController: UIViewController, CLLocationManagerDelegate {
     
@@ -22,6 +23,8 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate {
     var pedometer = CMPedometer()
     var activityManager = CMMotionActivityManager()
     var steps = 0
+    var rate:Double = 0
+    var saved = false
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var rateLabel: UILabel!
@@ -103,10 +106,15 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate {
             self.isTimerRunning = true
             startLocation = nil
             stepCounter()
+            saved = false
         }
     }
     
     @objc func longPressPlay(){
+        if saved == false {
+            saveCoreData()
+            saved = true
+        }
         stopTimer()
         self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle"), for: UIControl.State.normal)
         self.isTimerRunning = false
@@ -117,6 +125,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate {
         self.rateLabel.text = "0,0 min/km"
         self.steps = 0
         self.cadenceLabel.text = String(self.steps) + " pasos"
+        self.rate = 0
     }
     
     func stopTimer() {
@@ -131,8 +140,8 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate {
             self.timeLabel.text = self.timeString(time: TimeInterval(self.seconds)) //Actualizamos el label.
             let min:Double = Double(self.seconds)/60
             let km = Double(floor(self.distanceTraveled)/1000)
-            let speed = Double(min/km)
-            self.rateLabel.text = NSString.localizedStringWithFormat("%.1f min/km", speed) as String
+            self.rate = Double(min/km)
+            self.rateLabel.text = NSString.localizedStringWithFormat("%.1f min/km", self.rate) as String
         }
     }
     
@@ -151,6 +160,25 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate {
                     self.cadenceLabel.text = String((data?.numberOfSteps.stringValue)!) + " pasos"
                 }
             }
+        }
+    }
+    
+    func saveCoreData(){
+        guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let miContexto = miDelegate.persistentContainer.viewContext
+        let history = History(context:miContexto)
+        history.date = Date()
+        history.km = Double(floor(self.distanceTraveled/1000))
+        history.rate = self.rate
+        history.step = Int16(self.steps)
+        history.time = Int16(self.seconds)
+        
+        do {
+           try miContexto.save()
+        } catch {
+           print("Error al guardar el contexto: \(error)")
         }
     }
     

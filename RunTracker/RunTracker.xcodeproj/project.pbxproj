@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E01277D240426A1004F70E0 /* RunTrackerModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E01277B240426A1004F70E0 /* RunTrackerModel.xcdatamodeld */; };
+		6E0127A324046C20004F70E0 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0127A224046C20004F70E0 /* HistoryTableViewCell.swift */; };
 		842EE96723FA8F410046D3C1 /* TrainingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EE96623FA8F410046D3C1 /* TrainingViewController.swift */; };
 		842EE96923FA8F760046D3C1 /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EE96823FA8F760046D3C1 /* HistoryTableViewController.swift */; };
 		842EE96B23FA8FD80046D3C1 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EE96A23FA8FD80046D3C1 /* ProfileViewController.swift */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6E01277C240426A1004F70E0 /* RunTrackerModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RunTrackerModel.xcdatamodel; sourceTree = "<group>"; };
+		6E0127A224046C20004F70E0 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		842EE96623FA8F410046D3C1 /* TrainingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingViewController.swift; sourceTree = "<group>"; };
 		842EE96823FA8F760046D3C1 /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		842EE96A23FA8FD80046D3C1 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +51,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6E0127A124046B4F004F70E0 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				842EE96823FA8F760046D3C1 /* HistoryTableViewController.swift */,
+				6E0127A224046C20004F70E0 /* HistoryTableViewCell.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
 		84BDCE0423F4777800AE5546 = {
 			isa = PBXGroup;
 			children = (
@@ -72,10 +85,11 @@
 				84C0C03823FC58AF0063FDF0 /* Options */,
 				842EE96A23FA8FD80046D3C1 /* ProfileViewController.swift */,
 				842EE96623FA8F410046D3C1 /* TrainingViewController.swift */,
-				842EE96823FA8F760046D3C1 /* HistoryTableViewController.swift */,
+				6E0127A124046B4F004F70E0 /* History */,
 				84BDCE1B23F4777B00AE5546 /* Assets.xcassets */,
 				84BDCE1D23F4777B00AE5546 /* LaunchScreen.storyboard */,
 				84BDCE2023F4777B00AE5546 /* Info.plist */,
+				6E01277B240426A1004F70E0 /* RunTrackerModel.xcdatamodeld */,
 			);
 			path = RunTracker;
 			sourceTree = "<group>";
@@ -165,7 +179,9 @@
 				842EE96723FA8F410046D3C1 /* TrainingViewController.swift in Sources */,
 				842EE96D23FA90010046D3C1 /* OptionsTableViewController.swift in Sources */,
 				842EE96B23FA8FD80046D3C1 /* ProfileViewController.swift in Sources */,
+				6E0127A324046C20004F70E0 /* HistoryTableViewCell.swift in Sources */,
 				84C0C03723FC58A60063FDF0 /* OptionsTableViewCell.swift in Sources */,
+				6E01277D240426A1004F70E0 /* RunTrackerModel.xcdatamodeld in Sources */,
 				84BDCE1123F4777800AE5546 /* AppDelegate.swift in Sources */,
 				84DFBBE223FDA6E800B63091 /* DetailOptionsViewController.swift in Sources */,
 				84BDCE1323F4777800AE5546 /* SceneDelegate.swift in Sources */,
@@ -366,6 +382,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6E01277B240426A1004F70E0 /* RunTrackerModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6E01277C240426A1004F70E0 /* RunTrackerModel.xcdatamodel */,
+			);
+			currentVersion = 6E01277C240426A1004F70E0 /* RunTrackerModel.xcdatamodel */;
+			path = RunTrackerModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 84BDCE0523F4777800AE5546 /* Project object */;
 }

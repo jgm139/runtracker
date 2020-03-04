@@ -15,7 +15,7 @@ class HistoryTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        deleteHistory()
+//        deleteHistory()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -34,6 +34,7 @@ class HistoryTableViewController: UITableViewController {
         //"miContexto" es el contexto de Core Data
         //FALTA el código que obtiene "miContexto", como se ha hecho en ejemplos anteriores
         listHistory = try? miContexto.fetch(request) as! [History]
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -52,11 +53,29 @@ class HistoryTableViewController: UITableViewController {
         var cell = tableView.dequeueReusableCell(withIdentifier: "itemHistory", for: indexPath) as! HistoryTableViewCell
 
         
-        //cell.dateLabel.text = String(self.listHistory[indexPath.row].date)
+        cell.dateLabel.text = self.dateString(date: self.listHistory[indexPath.row].date!)
         cell.distanceLabel.text = String(self.listHistory[indexPath.row].km)
-        cell.timeLabel.text = String(self.listHistory[indexPath.row].time)
+        cell.timeLabel.text = self.timeString(time: TimeInterval(self.listHistory[indexPath.row].time))
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "detailSegue", sender: self)
+    }
+    
+    func timeString(time:TimeInterval) -> String {
+        let hours = Int(time) / 3600
+        let minutes = Int(time) / 60 % 60
+        let seconds = Int(time) % 60
+        return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
+    }
+    
+    func dateString(date:Date) -> String {
+        let formatter = DateFormatter()
+        //2016-12-08 03:37:22 +0000
+        formatter.dateFormat = "dd/MM/yyyy HH:mm"
+        return formatter.string(from:date)
     }
 
     /*

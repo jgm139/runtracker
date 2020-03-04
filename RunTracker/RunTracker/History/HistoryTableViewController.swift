@@ -7,40 +7,76 @@
 //
 
 import UIKit
+import CoreData
 
 class HistoryTableViewController: UITableViewController {
-
+    
+    var listHistory : [History]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//        deleteHistory()
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let miContexto = miDelegate.persistentContainer.viewContext
+        
+        let request : NSFetchRequest<History> = NSFetchRequest(entityName:"History")
+        //"miContexto" es el contexto de Core Data
+        //FALTA el código que obtiene "miContexto", como se ha hecho en ejemplos anteriores
+        listHistory = try? miContexto.fetch(request) as! [History]
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return listHistory.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        var cell = tableView.dequeueReusableCell(withIdentifier: "itemHistory", for: indexPath) as! HistoryTableViewCell
 
-        // Configure the cell...
+        
+        cell.dateLabel.text = self.dateString(date: self.listHistory[indexPath.row].date!)
+        cell.distanceLabel.text = String(self.listHistory[indexPath.row].km)
+        cell.timeLabel.text = self.timeString(time: TimeInterval(self.listHistory[indexPath.row].time))
 
         return cell
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "detailSegue", sender: self)
+    }
+    
+    func timeString(time:TimeInterval) -> String {
+        let hours = Int(time) / 3600
+        let minutes = Int(time) / 60 % 60
+        let seconds = Int(time) % 60
+        return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
+    }
+    
+    func dateString(date:Date) -> String {
+        let formatter = DateFormatter()
+        //2016-12-08 03:37:22 +0000
+        formatter.dateFormat = "dd/MM/yyyy HH:mm"
+        return formatter.string(from:date)
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -86,5 +122,27 @@ class HistoryTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    func deleteHistory(){
+        guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let miContexto = miDelegate.persistentContainer.viewContext
+        
+        let request : NSFetchRequest<History> = NSFetchRequest(entityName:"History")
+        //"miContexto" es el contexto de Core Data
+        //FALTA el código que obtiene "miContexto", como se ha hecho en ejemplos anteriores
+        listHistory = try? miContexto.fetch(request) as! [History]
+        
+        for history in listHistory{
+            miContexto.delete(history)
+        }
+        
+        do {
+           try miContexto.save()
+        } catch {
+           print("Error al guardar el contexto: \(error)")
+        }
+    }
+    
 }

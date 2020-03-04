@@ -3,28 +3,40 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		842EE96723FA8F410046D3C1 /* TrainingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EE96623FA8F410046D3C1 /* TrainingViewController.swift */; };
 		842EE96923FA8F760046D3C1 /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EE96823FA8F760046D3C1 /* HistoryTableViewController.swift */; };
 		842EE96B23FA8FD80046D3C1 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EE96A23FA8FD80046D3C1 /* ProfileViewController.swift */; };
-		842EE96D23FA90010046D3C1 /* OptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EE96C23FA90010046D3C1 /* OptionsTableViewController.swift */; };
+		8449C97524101CDE00089C25 /* GestorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8449C97424101CDE00089C25 /* GestorPicker.swift */; };
+		8455922E240BD2090051B806 /* IntervalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455922D240BD2090051B806 /* IntervalViewController.swift */; };
+		84559230240BD2190051B806 /* GPSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455922F240BD2190051B806 /* GPSViewController.swift */; };
+		84559232240BD2280051B806 /* HRMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84559231240BD2280051B806 /* HRMViewController.swift */; };
+		84559234240BD23B0051B806 /* WatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84559233240BD23B0051B806 /* WatchViewController.swift */; };
+		846A10782406ED160080E47E /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846A10772406ED160080E47E /* OptionsViewController.swift */; };
+		846A107A2406FB220080E47E /* CadenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846A10792406FB220080E47E /* CadenceViewController.swift */; };
 		84BDCE1123F4777800AE5546 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDCE1023F4777800AE5546 /* AppDelegate.swift */; };
 		84BDCE1323F4777800AE5546 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDCE1223F4777800AE5546 /* SceneDelegate.swift */; };
 		84BDCE1A23F4777800AE5546 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BDCE1823F4777800AE5546 /* Main.storyboard */; };
 		84BDCE1C23F4777B00AE5546 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BDCE1B23F4777B00AE5546 /* Assets.xcassets */; };
 		84BDCE1F23F4777B00AE5546 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BDCE1D23F4777B00AE5546 /* LaunchScreen.storyboard */; };
-		84C0C03723FC58A60063FDF0 /* OptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0C03623FC58A60063FDF0 /* OptionsTableViewCell.swift */; };
-		84DFBBE223FDA6E800B63091 /* DetailOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DFBBE123FDA6E800B63091 /* DetailOptionsViewController.swift */; };
+		968DEB4199BE0137B4B3DC28 /* Pods_RunTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4558AB7D130A12B76636393B /* Pods_RunTracker.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4558AB7D130A12B76636393B /* Pods_RunTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		842EE96623FA8F410046D3C1 /* TrainingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingViewController.swift; sourceTree = "<group>"; };
 		842EE96823FA8F760046D3C1 /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		842EE96A23FA8FD80046D3C1 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		842EE96C23FA90010046D3C1 /* OptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsTableViewController.swift; sourceTree = "<group>"; };
+		8449C97424101CDE00089C25 /* GestorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestorPicker.swift; sourceTree = "<group>"; };
+		8455922D240BD2090051B806 /* IntervalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalViewController.swift; sourceTree = "<group>"; };
+		8455922F240BD2190051B806 /* GPSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSViewController.swift; sourceTree = "<group>"; };
+		84559231240BD2280051B806 /* HRMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HRMViewController.swift; sourceTree = "<group>"; };
+		84559233240BD23B0051B806 /* WatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewController.swift; sourceTree = "<group>"; };
+		846A10772406ED160080E47E /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
+		846A10792406FB220080E47E /* CadenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadenceViewController.swift; sourceTree = "<group>"; };
 		84BDCE0D23F4777800AE5546 /* RunTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84BDCE1023F4777800AE5546 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84BDCE1223F4777800AE5546 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -32,8 +44,8 @@
 		84BDCE1B23F4777B00AE5546 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84BDCE1E23F4777B00AE5546 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84BDCE2023F4777B00AE5546 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84C0C03623FC58A60063FDF0 /* OptionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsTableViewCell.swift; sourceTree = "<group>"; };
-		84DFBBE123FDA6E800B63091 /* DetailOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailOptionsViewController.swift; sourceTree = "<group>"; };
+		97DC5FE8D2B0A9A3E450A12B /* Pods-RunTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunTracker.debug.xcconfig"; path = "Target Support Files/Pods-RunTracker/Pods-RunTracker.debug.xcconfig"; sourceTree = "<group>"; };
+		BC2322E37ED8C6B4AE40BE25 /* Pods-RunTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunTracker.release.xcconfig"; path = "Target Support Files/Pods-RunTracker/Pods-RunTracker.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,17 +53,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				968DEB4199BE0137B4B3DC28 /* Pods_RunTracker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		55F605B1F6A093E05BA86091 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4558AB7D130A12B76636393B /* Pods_RunTracker.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		84BDCE0423F4777800AE5546 = {
 			isa = PBXGroup;
 			children = (
 				84BDCE0F23F4777800AE5546 /* RunTracker */,
 				84BDCE0E23F4777800AE5546 /* Products */,
+				9EF7F1E9C73163E6DF088E10 /* Pods */,
+				55F605B1F6A093E05BA86091 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -83,11 +106,24 @@
 		84C0C03823FC58AF0063FDF0 /* Options */ = {
 			isa = PBXGroup;
 			children = (
-				842EE96C23FA90010046D3C1 /* OptionsTableViewController.swift */,
-				84C0C03623FC58A60063FDF0 /* OptionsTableViewCell.swift */,
-				84DFBBE123FDA6E800B63091 /* DetailOptionsViewController.swift */,
+				846A10772406ED160080E47E /* OptionsViewController.swift */,
+				846A10792406FB220080E47E /* CadenceViewController.swift */,
+				8455922D240BD2090051B806 /* IntervalViewController.swift */,
+				8455922F240BD2190051B806 /* GPSViewController.swift */,
+				84559231240BD2280051B806 /* HRMViewController.swift */,
+				84559233240BD23B0051B806 /* WatchViewController.swift */,
+				8449C97424101CDE00089C25 /* GestorPicker.swift */,
 			);
 			path = Options;
+			sourceTree = "<group>";
+		};
+		9EF7F1E9C73163E6DF088E10 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				97DC5FE8D2B0A9A3E450A12B /* Pods-RunTracker.debug.xcconfig */,
+				BC2322E37ED8C6B4AE40BE25 /* Pods-RunTracker.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -97,9 +133,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84BDCE2323F4777B00AE5546 /* Build configuration list for PBXNativeTarget "RunTracker" */;
 			buildPhases = (
+				444B188F44599C1BB6F831A0 /* [CP] Check Pods Manifest.lock */,
 				84BDCE0923F4777800AE5546 /* Sources */,
 				84BDCE0A23F4777800AE5546 /* Frameworks */,
 				84BDCE0B23F4777800AE5546 /* Resources */,
+				546873DEA6E4DE2C047D38A9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -156,19 +194,65 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		444B188F44599C1BB6F831A0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RunTracker-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		546873DEA6E4DE2C047D38A9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RunTracker/Pods-RunTracker-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RunTracker/Pods-RunTracker-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RunTracker/Pods-RunTracker-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		84BDCE0923F4777800AE5546 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				846A107A2406FB220080E47E /* CadenceViewController.swift in Sources */,
 				842EE96923FA8F760046D3C1 /* HistoryTableViewController.swift in Sources */,
 				842EE96723FA8F410046D3C1 /* TrainingViewController.swift in Sources */,
-				842EE96D23FA90010046D3C1 /* OptionsTableViewController.swift in Sources */,
+				8455922E240BD2090051B806 /* IntervalViewController.swift in Sources */,
+				84559230240BD2190051B806 /* GPSViewController.swift in Sources */,
+				846A10782406ED160080E47E /* OptionsViewController.swift in Sources */,
+				84559234240BD23B0051B806 /* WatchViewController.swift in Sources */,
+				84559232240BD2280051B806 /* HRMViewController.swift in Sources */,
 				842EE96B23FA8FD80046D3C1 /* ProfileViewController.swift in Sources */,
-				84C0C03723FC58A60063FDF0 /* OptionsTableViewCell.swift in Sources */,
 				84BDCE1123F4777800AE5546 /* AppDelegate.swift in Sources */,
-				84DFBBE223FDA6E800B63091 /* DetailOptionsViewController.swift in Sources */,
 				84BDCE1323F4777800AE5546 /* SceneDelegate.swift in Sources */,
+				8449C97524101CDE00089C25 /* GestorPicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +394,7 @@
 		};
 		84BDCE2423F4777B00AE5546 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97DC5FE8D2B0A9A3E450A12B /* Pods-RunTracker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -328,6 +413,7 @@
 		};
 		84BDCE2523F4777B00AE5546 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC2322E37ED8C6B4AE40BE25 /* Pods-RunTracker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

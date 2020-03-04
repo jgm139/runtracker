@@ -1,0 +1,16 @@
+PODS:
+  - QuickTableViewController (1.2.1)
+
+DEPENDENCIES:
+  - QuickTableViewController
+
+SPEC REPOS:
+  trunk:
+    - QuickTableViewController
+
+SPEC CHECKSUMS:
+  QuickTableViewController: e633756f35ddaafc5997f71bab9b0e512439ed85
+
+PODFILE CHECKSUM: 533ae68ed623a8920a64af97b70382bad44e05b1
+
+COCOAPODS: 1.9.0

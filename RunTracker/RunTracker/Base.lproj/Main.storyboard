@@ -118,7 +118,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6by-Xx-Nfn">
                                             <rect key="frame" x="126.5" y="38.5" width="161" height="20.5"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gXr-dg-Q63">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gXr-dg-Q63">
                                                     <rect key="frame" x="0.0" y="0.0" width="45" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -367,7 +367,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WW8-nQ-3RJ">
-                                        <rect key="frame" x="0.0" y="29" width="320" height="216"/>
+                                        <rect key="frame" x="0.0" y="28.5" width="320" height="216"/>
                                     </pickerView>
                                 </subviews>
                             </stackView>
@@ -451,7 +451,6 @@
                         <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="9Mp-j5-YLO" kind="relationship" relationship="viewControllers" id="BaJ-sR-Ryx"/>
                         <segue destination="pfE-TD-BpG" kind="relationship" relationship="viewControllers" id="4T5-SY-J2s"/>
-                        <segue destination="0SO-Af-tcH" kind="relationship" relationship="viewControllers" id="flY-gd-oLC"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>

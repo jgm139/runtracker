@@ -234,7 +234,8 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         let miContexto = miDelegate.persistentContainer.viewContext
         let history = History(context:miContexto)
         history.date = Date()
-        history.km = Double(floor(self.distanceTraveled/1000))
+        let km = Double(floor(self.distanceTraveled)/1000)
+        history.km = km
         history.rate = self.rate
         history.step = Int16(self.steps)
         history.time = Int16(self.seconds)

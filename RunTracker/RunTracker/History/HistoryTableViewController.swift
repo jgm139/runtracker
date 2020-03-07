@@ -113,15 +113,23 @@ class HistoryTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "detailSegue" {
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                let destiny = segue.destination as! DetailViewController
+                
+                destiny.seconds = Int(self.listHistory[indexPath.row].time)
+                destiny.distanceTraveled = self.listHistory[indexPath.row].km
+                destiny.rate = self.listHistory[indexPath.row].rate
+                destiny.steps = Int(self.listHistory[indexPath.row].step)
+            }
+        }
     }
-    */
+    
     
     func deleteHistory(){
         guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {

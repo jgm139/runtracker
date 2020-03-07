@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1AA0D6D4241418BE0044476C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA0D6D3241418BE0044476C /* DetailViewController.swift */; };
 		6E01277D240426A1004F70E0 /* RunTrackerModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E01277B240426A1004F70E0 /* RunTrackerModel.xcdatamodeld */; };
 		6E0127A324046C20004F70E0 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0127A224046C20004F70E0 /* HistoryTableViewCell.swift */; };
 		842EE96723FA8F410046D3C1 /* TrainingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EE96623FA8F410046D3C1 /* TrainingViewController.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1AA0D6D3241418BE0044476C /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		4558AB7D130A12B76636393B /* Pods_RunTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E01277C240426A1004F70E0 /* RunTrackerModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RunTrackerModel.xcdatamodel; sourceTree = "<group>"; };
 		6E0127A224046C20004F70E0 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 			children = (
 				842EE96823FA8F760046D3C1 /* HistoryTableViewController.swift */,
 				6E0127A224046C20004F70E0 /* HistoryTableViewCell.swift */,
+				1AA0D6D3241418BE0044476C /* DetailViewController.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -265,9 +268,9 @@
 				84559232240BD2280051B806 /* HRMViewController.swift in Sources */,
 				842EE96B23FA8FD80046D3C1 /* ProfileViewController.swift in Sources */,
 				6E0127A324046C20004F70E0 /* HistoryTableViewCell.swift in Sources */,
-				84C0C03723FC58A60063FDF0 /* OptionsTableViewCell.swift in Sources */,
 				6E01277D240426A1004F70E0 /* RunTrackerModel.xcdatamodeld in Sources */,
 				84BDCE1123F4777800AE5546 /* AppDelegate.swift in Sources */,
+				1AA0D6D4241418BE0044476C /* DetailViewController.swift in Sources */,
 				84BDCE1323F4777800AE5546 /* SceneDelegate.swift in Sources */,
 				8449C97524101CDE00089C25 /* GestorPicker.swift in Sources */,
 			);

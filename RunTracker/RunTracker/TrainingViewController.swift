@@ -220,7 +220,8 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
                 self.pedometer.startUpdates(from: Date()) {
                     (data, error) in
                     OperationQueue.main.addOperation {
-                        self.cadenceLabel.text = String((data?.numberOfSteps.stringValue)!) + " pasos"
+                        let min:Double = Double(self.seconds)/60
+                        self.cadenceLabel.text = String((data?.numberOfSteps.doubleValue)!/min) + " pasos/min"
                     }
                 }
             }
@@ -234,8 +235,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         let miContexto = miDelegate.persistentContainer.viewContext
         let history = History(context:miContexto)
         history.date = Date()
-        let km = Double(floor(self.distanceTraveled)/1000)
-        history.km = km
+        history.km = Double(floor(self.distanceTraveled)/1000)
         history.rate = self.rate
         history.step = Int16(self.steps)
         history.time = Int16(self.seconds)

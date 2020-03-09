@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CoreLocation
 
 class HistoryTableViewController: UITableViewController {
     
@@ -33,7 +34,7 @@ class HistoryTableViewController: UITableViewController {
         let request : NSFetchRequest<History> = NSFetchRequest(entityName:"History")
         //"miContexto" es el contexto de Core Data
         //FALTA el código que obtiene "miContexto", como se ha hecho en ejemplos anteriores
-        listHistory = try? miContexto.fetch(request) as! [History]
+        listHistory = try? miContexto.fetch(request) 
         tableView.reloadData()
     }
 
@@ -50,7 +51,7 @@ class HistoryTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "itemHistory", for: indexPath) as! HistoryTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "itemHistory", for: indexPath) as! HistoryTableViewCell
 
         
         cell.dateLabel.text = self.dateString(date: self.listHistory[indexPath.row].date!)
@@ -86,17 +87,30 @@ class HistoryTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+            guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                return
+            }
+            let miContexto = miDelegate.persistentContainer.viewContext
+            
+            do{
+                miContexto.delete(listHistory[indexPath.row])
+                do {
+                    try miContexto.save()
+                } catch {
+                    print(error)
+                }
+            }
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
@@ -126,6 +140,10 @@ class HistoryTableViewController: UITableViewController {
                 destiny.distanceTraveled = self.listHistory[indexPath.row].km
                 destiny.rate = self.listHistory[indexPath.row].rate
                 destiny.steps = Int(self.listHistory[indexPath.row].step)
+                
+                if let locations = self.listHistory[indexPath.row].locations {
+                    destiny.locationsHistory = locations.allObjects as! [Location]
+                }
             }
         }
     }
@@ -140,7 +158,7 @@ class HistoryTableViewController: UITableViewController {
         let request : NSFetchRequest<History> = NSFetchRequest(entityName:"History")
         //"miContexto" es el contexto de Core Data
         //FALTA el código que obtiene "miContexto", como se ha hecho en ejemplos anteriores
-        listHistory = try? miContexto.fetch(request) as! [History]
+        listHistory = try? miContexto.fetch(request) 
         
         for history in listHistory{
             miContexto.delete(history)

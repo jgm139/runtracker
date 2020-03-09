@@ -36,7 +36,8 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         return manager
     }()
     private var locationsHistory: [CLLocation] = []
-    var isPaused = true
+    private var locationsIsPaused: [Bool] = []
+    var isPaused = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,33 +88,24 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
                 startPoint.title = "Inicio"
                 startPoint.coordinate = CLLocationCoordinate2D(latitude: (locations.first?.coordinate.latitude)!, longitude: (locations.first?.coordinate.longitude)!)
                 self.mapView.addAnnotation(startPoint)
+                self.locationsHistory.append(self.startLocation)
+                self.locationsIsPaused.append(self.isPaused)
             } else {
-                /*if(location.horizontalAccuracy < 20 && location.horizontalAccuracy >= 0 && location.verticalAccuracy < 5) {
-                    let lastLocation = locations.last
-                    let distance = startLocation.distance(from: lastLocation!)
-                    if distance > 0.8 {
-                        startLocation = lastLocation
-                        distanceTraveled += distance
-                        let km = Double(floor(distanceTraveled)/1000)
-                        distanceLabel.text = NSString.localizedStringWithFormat("%.3f km", km) as String
-                    }
-                }*/
-                
                 for newLocation in locations {
                     if newLocation.horizontalAccuracy < 20 && newLocation.horizontalAccuracy >= 0 && newLocation.verticalAccuracy < 5 {
                         if let previousPoint = locationsHistory.last {
                             self.distanceTraveled += newLocation.distance(from: previousPoint)
-                            
+
+                            self.locationsIsPaused.append(self.isPaused)
+                            var area:[CLLocationCoordinate2D]
                             if self.isPaused == true {
-                                var area = [newLocation.coordinate, newLocation.coordinate]
-                                let polyline = MKPolyline(coordinates: &area, count: area.count)
-                                mapView.addOverlay(polyline)
+                                area = [newLocation.coordinate, newLocation.coordinate]
                                 self.isPaused = false
                             } else {
-                                var area = [previousPoint.coordinate, newLocation.coordinate]
-                                let polyline = MKPolyline(coordinates: &area, count: area.count)
-                                mapView.addOverlay(polyline)
+                                area = [previousPoint.coordinate, newLocation.coordinate]
                             }
+                            let polyline = MKPolyline(coordinates: &area, count: area.count)
+                            mapView.addOverlay(polyline)
                         }
                         self.locationsHistory.append(newLocation)
                         let km = Double(floor(distanceTraveled)/1000)
@@ -164,7 +156,6 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
             runTimer()
             self.buttonPlay.setBackgroundImage(UIImage(systemName:"pause.circle.fill"), for: UIControl.State.normal)
             self.isTimerRunning = true
-            startLocation = nil
             stepCounter()
             saved = false
         }
@@ -187,7 +178,10 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         self.cadenceLabel.text = String(self.steps) + " pasos"
         self.rate = 0
         self.mapView.removeOverlays(self.mapView.overlays)
+        self.mapView.removeAnnotations(self.mapView.annotations)
         self.locationsHistory = []
+        self.locationsIsPaused = []
+        self.isPaused = false
     }
     
     func stopTimer() {
@@ -240,6 +234,19 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         history.step = Int16(self.steps)
         history.time = Int16(self.seconds)
         
+        var idLocation = 0
+        for data in self.locationsHistory {
+            let location = Location(context: miContexto)
+            location.latitude = data.coordinate.latitude
+            location.longitude = data.coordinate.longitude
+            location.id = Int16(idLocation)
+            location.isPaused = self.locationsIsPaused[idLocation]
+            
+            idLocation += 1
+            
+            location.history = history
+            history.addToLocations(location)
+        }
         do {
            try miContexto.save()
         } catch {

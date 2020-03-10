@@ -12,11 +12,12 @@
 		842EE96723FA8F410046D3C1 /* TrainingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EE96623FA8F410046D3C1 /* TrainingViewController.swift */; };
 		842EE96923FA8F760046D3C1 /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EE96823FA8F760046D3C1 /* HistoryTableViewController.swift */; };
 		842EE96B23FA8FD80046D3C1 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EE96A23FA8FD80046D3C1 /* ProfileViewController.swift */; };
+		843D878424156EC100BE1612 /* OptionsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843D878324156EC100BE1612 /* OptionsConstants.swift */; };
 		8449C97524101CDE00089C25 /* GestorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8449C97424101CDE00089C25 /* GestorPicker.swift */; };
+		844D87C22416A4970042EAEC /* MiBand2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844D87C02416A4970042EAEC /* MiBand2.swift */; };
+		844D87C32416A4970042EAEC /* MiBand2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844D87C12416A4970042EAEC /* MiBand2Service.swift */; };
 		8455922E240BD2090051B806 /* IntervalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455922D240BD2090051B806 /* IntervalViewController.swift */; };
-		84559230240BD2190051B806 /* GPSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455922F240BD2190051B806 /* GPSViewController.swift */; };
 		84559232240BD2280051B806 /* HRMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84559231240BD2280051B806 /* HRMViewController.swift */; };
-		84559234240BD23B0051B806 /* WatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84559233240BD23B0051B806 /* WatchViewController.swift */; };
 		846A10782406ED160080E47E /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846A10772406ED160080E47E /* OptionsViewController.swift */; };
 		846A107A2406FB220080E47E /* CadenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846A10792406FB220080E47E /* CadenceViewController.swift */; };
 		84BDCE1123F4777800AE5546 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDCE1023F4777800AE5546 /* AppDelegate.swift */; };
@@ -34,11 +35,12 @@
 		842EE96623FA8F410046D3C1 /* TrainingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingViewController.swift; sourceTree = "<group>"; };
 		842EE96823FA8F760046D3C1 /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		842EE96A23FA8FD80046D3C1 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		843D878324156EC100BE1612 /* OptionsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsConstants.swift; sourceTree = "<group>"; };
 		8449C97424101CDE00089C25 /* GestorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestorPicker.swift; sourceTree = "<group>"; };
+		844D87C02416A4970042EAEC /* MiBand2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiBand2.swift; sourceTree = "<group>"; };
+		844D87C12416A4970042EAEC /* MiBand2Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiBand2Service.swift; sourceTree = "<group>"; };
 		8455922D240BD2090051B806 /* IntervalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalViewController.swift; sourceTree = "<group>"; };
-		8455922F240BD2190051B806 /* GPSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSViewController.swift; sourceTree = "<group>"; };
 		84559231240BD2280051B806 /* HRMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HRMViewController.swift; sourceTree = "<group>"; };
-		84559233240BD23B0051B806 /* WatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewController.swift; sourceTree = "<group>"; };
 		846A10772406ED160080E47E /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		846A10792406FB220080E47E /* CadenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadenceViewController.swift; sourceTree = "<group>"; };
 		84BDCE0D23F4777800AE5546 /* RunTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +83,15 @@
 			path = History;
 			sourceTree = "<group>";
 		};
+		844D87BF2416A44F0042EAEC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				844D87C02416A4970042EAEC /* MiBand2.swift */,
+				844D87C12416A4970042EAEC /* MiBand2Service.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		84BDCE0423F4777800AE5546 = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +116,7 @@
 				84BDCE1023F4777800AE5546 /* AppDelegate.swift */,
 				84BDCE1223F4777800AE5546 /* SceneDelegate.swift */,
 				84BDCE1823F4777800AE5546 /* Main.storyboard */,
+				844D87BF2416A44F0042EAEC /* Utils */,
 				84C0C03823FC58AF0063FDF0 /* Options */,
 				842EE96A23FA8FD80046D3C1 /* ProfileViewController.swift */,
 				842EE96623FA8F410046D3C1 /* TrainingViewController.swift */,
@@ -123,10 +135,9 @@
 				846A10772406ED160080E47E /* OptionsViewController.swift */,
 				846A10792406FB220080E47E /* CadenceViewController.swift */,
 				8455922D240BD2090051B806 /* IntervalViewController.swift */,
-				8455922F240BD2190051B806 /* GPSViewController.swift */,
 				84559231240BD2280051B806 /* HRMViewController.swift */,
-				84559233240BD23B0051B806 /* WatchViewController.swift */,
 				8449C97424101CDE00089C25 /* GestorPicker.swift */,
+				843D878324156EC100BE1612 /* OptionsConstants.swift */,
 			);
 			path = Options;
 			sourceTree = "<group>";
@@ -259,17 +270,17 @@
 				842EE96923FA8F760046D3C1 /* HistoryTableViewController.swift in Sources */,
 				842EE96723FA8F410046D3C1 /* TrainingViewController.swift in Sources */,
 				8455922E240BD2090051B806 /* IntervalViewController.swift in Sources */,
-				84559230240BD2190051B806 /* GPSViewController.swift in Sources */,
 				846A10782406ED160080E47E /* OptionsViewController.swift in Sources */,
-				84559234240BD23B0051B806 /* WatchViewController.swift in Sources */,
+				844D87C22416A4970042EAEC /* MiBand2.swift in Sources */,
 				84559232240BD2280051B806 /* HRMViewController.swift in Sources */,
 				842EE96B23FA8FD80046D3C1 /* ProfileViewController.swift in Sources */,
 				6E0127A324046C20004F70E0 /* HistoryTableViewCell.swift in Sources */,
-				84C0C03723FC58A60063FDF0 /* OptionsTableViewCell.swift in Sources */,
 				6E01277D240426A1004F70E0 /* RunTrackerModel.xcdatamodeld in Sources */,
 				84BDCE1123F4777800AE5546 /* AppDelegate.swift in Sources */,
+				843D878424156EC100BE1612 /* OptionsConstants.swift in Sources */,
 				84BDCE1323F4777800AE5546 /* SceneDelegate.swift in Sources */,
 				8449C97524101CDE00089C25 /* GestorPicker.swift in Sources */,
+				844D87C32416A4970042EAEC /* MiBand2Service.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

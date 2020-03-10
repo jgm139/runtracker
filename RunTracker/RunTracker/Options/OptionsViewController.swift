@@ -10,16 +10,34 @@ import Foundation
 import QuickTableViewController
 
 final class OptionsViewController: QuickTableViewController {
+    
+    // MARK: Properties
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let optionSelected = defaults.string(forKey: AccuracyGPS.GPS_KEY.raw())
+        var optionsValues: (optimum: Bool, medium: Bool, low: Bool) = (true, false, false)
+        
+        switch optionSelected {
+            case AccuracyGPS.GPS_OPTIMUM.raw():
+                optionsValues = (true, false, false)
+                break
+            case AccuracyGPS.GPS_MEDIUM.raw():
+                optionsValues = (false, true, false)
+                break
+            case AccuracyGPS.GPS_LOW.raw():
+                optionsValues = (false, false, true)
+                break
+            default:
+                break
+        }
 
         tableContents = [
             
         Section(title: "Notificaciones", rows: [
-            SwitchRow(text: "Notificaciones acústicas", switchValue: true, action: { _ in }),
             NavigationRow(text: "Cadencia", detailText: .none, icon: .image(UIImage(systemName: "timer")!), action: { [weak self] _ in
                 let resultViewController = storyBoard.instantiateViewController(withIdentifier: "CadenceViewController") as! CadenceViewController
                 self?.navigationController?.pushViewController(resultViewController, animated: true)
@@ -31,22 +49,42 @@ final class OptionsViewController: QuickTableViewController {
                 
                 
         Section(title: "Entreno", rows: [
-            NavigationRow(text: "Precisión GPS", detailText: .none, icon: .image(UIImage(systemName: "map")!), action: { [weak self] _ in
-            let resultViewController = storyBoard.instantiateViewController(withIdentifier: "GPSViewController") as! GPSViewController
-            self?.navigationController?.pushViewController(resultViewController, animated: true) }),
             SwitchRow(text: "Autopause", switchValue: true, action: { _ in })
         ]),
+        
+        RadioSection(title: "Precisión GPS", options: [
+            OptionRow(text: "Óptima", isSelected: optionsValues.optimum, action: didToggleSelection()),
+            OptionRow(text: "Media", isSelected: optionsValues.medium, action: didToggleSelection()),
+            OptionRow(text: "Baja", isSelected: optionsValues.low, action: didToggleSelection())
+        ], footer: "Elige el nivel de precisión del GPS."),
 
         Section(title: "Conectividad", rows: [
             NavigationRow(text: "Banda HRM", detailText: .none, icon: .image(UIImage(systemName: "heart")!), action: { [weak self] _ in
             let resultViewController = storyBoard.instantiateViewController(withIdentifier: "HRMViewController") as! HRMViewController
-            self?.navigationController?.pushViewController(resultViewController, animated: true) }),
-            NavigationRow(text: "Watch", detailText: .none, icon: .image(UIImage(systemName: "clock")!), action: { [weak self] _ in
-            let resultViewController = storyBoard.instantiateViewController(withIdentifier: "WatchViewController") as! WatchViewController
             self?.navigationController?.pushViewController(resultViewController, animated: true) })
         ]),
             
         ]
+    }
+    
+    private func didToggleSelection() -> (Row) -> Void {
+        return { [weak self] in
+            if let option = $0 as? OptionRowCompatible {
+                switch option.text {
+                    case AccuracyGPS.GPS_OPTIMUM.raw():
+                        self!.defaults.set(AccuracyGPS.GPS_OPTIMUM.raw(), forKey: AccuracyGPS.GPS_KEY.raw())
+                        break
+                    case AccuracyGPS.GPS_MEDIUM.raw():
+                        self!.defaults.set(AccuracyGPS.GPS_MEDIUM.raw(), forKey: AccuracyGPS.GPS_KEY.raw())
+                        break
+                    case AccuracyGPS.GPS_LOW.raw():
+                        self!.defaults.set(AccuracyGPS.GPS_LOW.raw(), forKey: AccuracyGPS.GPS_KEY.raw())
+                        break
+                    default:
+                        break
+                }
+            }
+        }
     }
     
 }

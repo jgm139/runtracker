@@ -8,13 +8,14 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var weight: UITextField!
     @IBOutlet weak var age: UITextField!
     @IBOutlet weak var height: UITextField!
     
+    @IBOutlet weak var imageProfile: UIImageView!
     @IBOutlet weak var sexImage: UIImageView!
     
     var textChange: String = ""
@@ -31,8 +32,8 @@ class ProfileViewController: UIViewController {
         height.addTarget(self, action: #selector(textFieldDidEndEditing), for: UIControl.Event.editingDidEnd)
         height.addTarget(self, action: #selector(textFieldDidBegin), for: UIControl.Event.editingDidBegin)
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tap)
+        let tapView: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        self.view.addGestureRecognizer(tapView)
         
         let appDefaults: [String:Any] = [self.name.restorationIdentifier! : "Nombre",
                                          self.weight.restorationIdentifier! : "00",
@@ -79,6 +80,28 @@ class ProfileViewController: UIViewController {
         }
         UserDefaults.standard.synchronize()
     }
+    
+    @IBAction func exportImage(_ sender: UITapGestureRecognizer) {
+        let image = UIImagePickerController()
+        image.delegate = self
+        
+        image.sourceType = UIImagePickerController.SourceType.photoLibrary
+        
+        image.allowsEditing = false
+        
+        self.present(image, animated: true) {
+            
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.originalImage] as? UIImage else { return }
+        self.imageProfile.image = image
+        self.imageProfile.contentMode = .scaleAspectFill
+            
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

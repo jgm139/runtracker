@@ -29,9 +29,9 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         
         self.timeLabel.text = self.timeString(time: TimeInterval(self.seconds))
-        self.distanceLabel.text = String(self.distanceTraveled) + " km"
-        self.rateLabel.text = NSString.localizedStringWithFormat("%.1f min/km", self.rate) as String
-        self.stepsLabel.text = String(self.steps) + " pasos/min"
+        self.distanceLabel.text = String(self.distanceTraveled)
+        self.rateLabel.text = NSString.localizedStringWithFormat("%.1f", self.rate) as String
+        self.stepsLabel.text = String(self.steps)
         
         self.mapView.delegate = self
         self.mapView.showsCompass = true

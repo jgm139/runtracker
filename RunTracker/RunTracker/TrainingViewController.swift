@@ -94,7 +94,6 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
                 for newLocation in locations {
                     if newLocation.horizontalAccuracy < 20 && newLocation.horizontalAccuracy >= 0 && newLocation.verticalAccuracy < 5 {
                         if let previousPoint = locationsHistory.last {
-                            self.distanceTraveled += newLocation.distance(from: previousPoint)
 
                             self.locationsIsPaused.append(self.isPaused)
                             var area:[CLLocationCoordinate2D]
@@ -103,13 +102,14 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
                                 self.isPaused = false
                             } else {
                                 area = [previousPoint.coordinate, newLocation.coordinate]
+                                self.distanceTraveled += newLocation.distance(from: previousPoint)
                             }
                             let polyline = MKPolyline(coordinates: &area, count: area.count)
                             mapView.addOverlay(polyline)
                         }
                         self.locationsHistory.append(newLocation)
                         let km = Double(floor(distanceTraveled)/1000)
-                        distanceLabel.text = NSString.localizedStringWithFormat("%.3f km", km) as String
+                        distanceLabel.text = NSString.localizedStringWithFormat("%.3f", km) as String
                     }
                 }
             }
@@ -171,11 +171,11 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         self.isTimerRunning = false
         self.startLocation = nil
         self.distanceTraveled = 0;
-        self.distanceLabel.text = "0,000 km"
+        self.distanceLabel.text = "0,000"
         self.timeLabel.text = "00:00:00"
-        self.rateLabel.text = "0,0 min/km"
+        self.rateLabel.text = "0,0"
         self.steps = 0
-        self.cadenceLabel.text = String(self.steps) + " pasos"
+        self.cadenceLabel.text = String(self.steps)
         self.rate = 0
         self.mapView.removeOverlays(self.mapView.overlays)
         self.mapView.removeAnnotations(self.mapView.annotations)
@@ -197,7 +197,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
             let min:Double = Double(self.seconds)/60
             let km = Double(floor(self.distanceTraveled)/1000)
             self.rate = Double(min/km)
-            self.rateLabel.text = NSString.localizedStringWithFormat("%.1f min/km", self.rate) as String
+            self.rateLabel.text = NSString.localizedStringWithFormat("%.1f", self.rate) as String
         }
     }
     
@@ -215,7 +215,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
                     (data, error) in
                     OperationQueue.main.addOperation {
                         let min:Double = Double(self.seconds)/60
-                        self.cadenceLabel.text = String((data?.numberOfSteps.doubleValue)!/min) + " pasos/min"
+                        self.cadenceLabel.text = String((data?.numberOfSteps.doubleValue)!/min)
                     }
                 }
             }

@@ -12,7 +12,7 @@ import QuickTableViewController
 
 class HRMViewController: QuickTableViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
     
-    // MARK: Outlets
+    // MARK: - Outlets
     @IBOutlet weak var vConnection: UIImageView!
     @IBOutlet weak var lConnection: UILabel!
     @IBOutlet weak var vBattery: UIImageView!
@@ -20,11 +20,11 @@ class HRMViewController: QuickTableViewController, CBCentralManagerDelegate, CBP
     @IBOutlet weak var vHeartRate: UIImageView!
     @IBOutlet weak var lHeartRate: UILabel!
     
-    
-    // MARK: Properties
+    // MARK: - Variables
     var centralManager: CBCentralManager!
     var miBand: MiBand2!
 
+    // MARK: - View Controller methods
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Banda HRM"
@@ -85,7 +85,7 @@ class HRMViewController: QuickTableViewController, CBCentralManagerDelegate, CBP
         self.vHeartRate.layer.removeAllAnimations()
     }
     
-    // MARK: - Central Manager
+    // MARK: - Central Manager Delegate
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
             case .poweredOn:
@@ -120,7 +120,7 @@ class HRMViewController: QuickTableViewController, CBCentralManagerDelegate, CBP
         miBand.peripheral.discoverServices(nil)
     }
     
-    // MARK: - Peripheral
+    // MARK: - Peripheral Delegate
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let servicePeripherals = peripheral.services {
             for servicePeripheral in servicePeripherals {

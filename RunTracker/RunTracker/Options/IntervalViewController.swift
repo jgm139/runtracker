@@ -11,7 +11,7 @@ import AVFoundation
 
 class IntervalViewController: UIViewController {
     
-    // MARK: Properties
+    // MARK: - Outlets
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var labelValue: UILabel!
@@ -19,14 +19,12 @@ class IntervalViewController: UIViewController {
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var switchNotifications: UISwitch!
     
-    
-    // Gestor del PickerView
+    // MARK: - Variables
     let gestorPicker = GestorPicker(from: "IntervalViewController")
-    
     let defaults = UserDefaults.standard
     var measure: String?
     
-
+    // MARK: - View Controller methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,7 +64,8 @@ class IntervalViewController: UIViewController {
         
         labelValue.text = "\(Int(slider.value))"
     }
-
+    
+    // MARK: - Actions
     @IBAction func valueSliderChanged(_ sender: UISlider) {
         labelValue.text = "\(Int(slider.value))"
         
@@ -97,6 +96,17 @@ class IntervalViewController: UIViewController {
         }
     }
     
+    @IBAction func switchChanged(_ sender: Any) {
+        if self.switchNotifications.isOn {
+            defaults.set(true, forKey: IntervalConstants.INTERVAL_NOTIFICATIONS.raw())
+            turnOnNotifications()
+        } else {
+            defaults.set(false, forKey: IntervalConstants.INTERVAL_NOTIFICATIONS.raw())
+            turnOffNotifications()
+        }
+    }
+    
+    // MARK: - Methods
     private func turnOffNotifications() {
         pickerView.isUserInteractionEnabled = false
         pickerView.alpha = 0.5
@@ -109,16 +119,6 @@ class IntervalViewController: UIViewController {
         
         let index: Int = defaults.integer(forKey: IntervalConstants.INTERVAL_INDEX_SOUNDS.raw())
         pickerView.selectRow(index, inComponent: 0, animated: true)
-    }
-    
-    @IBAction func switchChanged(_ sender: Any) {
-        if self.switchNotifications.isOn {
-            defaults.set(true, forKey: IntervalConstants.INTERVAL_NOTIFICATIONS.raw())
-            turnOnNotifications()
-        } else {
-            defaults.set(false, forKey: IntervalConstants.INTERVAL_NOTIFICATIONS.raw())
-            turnOffNotifications()
-        }
     }
 
 }

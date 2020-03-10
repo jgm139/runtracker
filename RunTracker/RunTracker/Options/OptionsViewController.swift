@@ -11,9 +11,10 @@ import QuickTableViewController
 
 final class OptionsViewController: QuickTableViewController {
     
-    // MARK: Properties
+    // MARK: - Variables
     let defaults = UserDefaults.standard
 
+    // MARK: View Controller methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -67,6 +68,7 @@ final class OptionsViewController: QuickTableViewController {
         ]
     }
     
+    // MARK: - Methods
     private func didToggleSelection() -> (Row) -> Void {
         return { [weak self] in
             if let option = $0 as? OptionRowCompatible {

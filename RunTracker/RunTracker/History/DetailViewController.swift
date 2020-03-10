@@ -12,19 +12,21 @@ import CoreLocation
 
 class DetailViewController: UIViewController, MKMapViewDelegate {
     
-    var seconds = 0
-    var distanceTraveled = 0.0
-    var rate = 0.0
-    var steps = 0
-    
-    var locationsHistory: [Location] = []
+    // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
-    
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var rateLabel: UILabel!
     @IBOutlet weak var stepsLabel: UILabel!
     
+    // MARK: - Variables
+    var seconds = 0
+    var distanceTraveled = 0.0
+    var rate = 0.0
+    var steps = 0
+    var locationsHistory: [Location] = []
+    
+    // MARK: - View Controller methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +44,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
         self.drawOverlays()
     }
     
+    // MARK: - Methods
     func drawOverlays(){
         if var previousLocation = self.locationsHistory.first {
             for location in self.locationsHistory {
@@ -86,6 +89,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
         return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
     }
     
+    // MARK: - Map View Delegate
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
          if (overlay is MKPolyline) {
              let pr = MKPolylineRenderer(overlay: overlay)

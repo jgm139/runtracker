@@ -10,16 +10,18 @@ import UIKit
 
 class ProfileViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
+    // MARK: - Outlets
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var weight: UITextField!
     @IBOutlet weak var age: UITextField!
     @IBOutlet weak var height: UITextField!
-    
     @IBOutlet weak var imageProfile: UIImageView!
     @IBOutlet weak var sexImage: UIImageView!
     
+    // MARK: - Variables
     var textChange: String = ""
     
+    // MARK: - View Controller methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,6 +47,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         loadUserDefaults()
     }
     
+    // MARK: - Methods
     func loadUserDefaults() {
         name.text = UserDefaults.standard.string(forKey: name.restorationIdentifier!)
         weight.text = UserDefaults.standard.string(forKey: weight.restorationIdentifier!)
@@ -70,6 +73,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
        view.endEditing(true)
     }
     
+    // MARK: - Actions
     @IBAction func changeSex(_ sender: UITapGestureRecognizer) {
         if sexImage.image == UIImage(named: "men") {
             sexImage.image = UIImage(named: "women")
@@ -94,6 +98,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         }
     }
     
+    // MARK: - Picker Controller Delegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
         self.imageProfile.image = image
@@ -101,15 +106,4 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
             
         self.dismiss(animated: true, completion: nil)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

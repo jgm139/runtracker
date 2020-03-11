@@ -14,7 +14,15 @@ import CoreData
 
 class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
+    // MARK: - Outlets
     @IBOutlet weak var buttonPlay: UIButton!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var rateLabel: UILabel!
+    @IBOutlet weak var cadenceLabel: UILabel!
+    @IBOutlet weak var mapView: MKMapView!
+    
+    // MARK: - Variables
     var timer = Timer()
     var seconds = 0
     var isTimerRunning = false
@@ -25,20 +33,18 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     var steps = 0
     var rate:Double = 0
     var saved = false
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var distanceLabel: UILabel!
-    @IBOutlet weak var rateLabel: UILabel!
-    @IBOutlet weak var cadenceLabel: UILabel!
-    @IBOutlet weak var mapView: MKMapView!
-    fileprivate let locationManager:CLLocationManager = {
+    var isPaused = false
+    
+    // MARK: - Location Variables
+    fileprivate let locationManager: CLLocationManager = {
         let manager = CLLocationManager()
         manager.requestWhenInUseAuthorization()
         return manager
     }()
     private var locationsHistory: [CLLocation] = []
     private var locationsIsPaused: [Bool] = []
-    var isPaused = false
     
+    // MARK: - View Controller methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,6 +69,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         
     }
     
+    // MARK: - Location Manager Delegate
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .authorizedAlways, .authorizedWhenInUse:
@@ -115,7 +122,12 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
             }
         }
     }
-
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
+    }
+    
+    // MARK: - Map View Delegate
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
          if (overlay is MKPolyline) {
              let pr = MKPolylineRenderer(overlay: overlay)
@@ -142,10 +154,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         return annotationView
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error.localizedDescription)
-    }
-    
+    // MARK: - Actions
     @IBAction func actionPlay(_ sender: Any) {
         if self.isTimerRunning == true {
             timer.invalidate()
@@ -161,6 +170,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         }
     }
     
+    // MARK: - Methods
     @objc func longPressPlay(){
         if saved == false {
             saveCoreData()
@@ -222,6 +232,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         }
     }
     
+    // MARK: - Core Data
     func saveCoreData(){
         guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return

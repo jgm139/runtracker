@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A50BAD9241BC094004A86B2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50BAD8241BC094004A86B2 /* LoginViewController.swift */; };
+		1A50BADB241BC0B1004A86B2 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50BADA241BC0B1004A86B2 /* RegisterViewController.swift */; };
 		1AA0D6D4241418BE0044476C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA0D6D3241418BE0044476C /* DetailViewController.swift */; };
 		6E01277D240426A1004F70E0 /* RunTrackerModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E01277B240426A1004F70E0 /* RunTrackerModel.xcdatamodeld */; };
 		6E0127A324046C20004F70E0 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0127A224046C20004F70E0 /* HistoryTableViewCell.swift */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A50BAD8241BC094004A86B2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		1A50BADA241BC0B1004A86B2 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		1AA0D6D3241418BE0044476C /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		4558AB7D130A12B76636393B /* Pods_RunTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E01277C240426A1004F70E0 /* RunTrackerModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RunTrackerModel.xcdatamodel; sourceTree = "<group>"; };
@@ -68,6 +72,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A50BAD7241BC05E004A86B2 /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				1A50BAD8241BC094004A86B2 /* LoginViewController.swift */,
+				1A50BADA241BC0B1004A86B2 /* RegisterViewController.swift */,
+			);
+			path = Users;
+			sourceTree = "<group>";
+		};
 		55F605B1F6A093E05BA86091 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +136,7 @@
 				84C0C03823FC58AF0063FDF0 /* Options */,
 				842EE96A23FA8FD80046D3C1 /* ProfileViewController.swift */,
 				842EE96623FA8F410046D3C1 /* TrainingViewController.swift */,
+				1A50BAD7241BC05E004A86B2 /* Users */,
 				6E0127A124046B4F004F70E0 /* History */,
 				84BDCE1B23F4777B00AE5546 /* Assets.xcassets */,
 				84BDCE1D23F4777B00AE5546 /* LaunchScreen.storyboard */,
@@ -278,10 +292,12 @@
 				84559232240BD2280051B806 /* HRMViewController.swift in Sources */,
 				842EE96B23FA8FD80046D3C1 /* ProfileViewController.swift in Sources */,
 				6E0127A324046C20004F70E0 /* HistoryTableViewCell.swift in Sources */,
+				1A50BADB241BC0B1004A86B2 /* RegisterViewController.swift in Sources */,
 				6E01277D240426A1004F70E0 /* RunTrackerModel.xcdatamodeld in Sources */,
 				84BDCE1123F4777800AE5546 /* AppDelegate.swift in Sources */,
 				843D878424156EC100BE1612 /* OptionsConstants.swift in Sources */,
 				1AA0D6D4241418BE0044476C /* DetailViewController.swift in Sources */,
+				1A50BAD9241BC094004A86B2 /* LoginViewController.swift in Sources */,
 				84BDCE1323F4777800AE5546 /* SceneDelegate.swift in Sources */,
 				8449C97524101CDE00089C25 /* GestorPicker.swift in Sources */,
 				844D87C32416A4970042EAEC /* MiBand2Service.swift in Sources */,

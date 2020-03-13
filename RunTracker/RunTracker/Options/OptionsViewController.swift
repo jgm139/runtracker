@@ -35,6 +35,8 @@ final class OptionsViewController: QuickTableViewController {
             default:
                 break
         }
+        
+        let autopause = defaults.bool(forKey: AutopauseConstants.AUTOPAUSE_KEY.raw())
 
         tableContents = [
             
@@ -50,7 +52,7 @@ final class OptionsViewController: QuickTableViewController {
                 
                 
         Section(title: "Entreno", rows: [
-            SwitchRow(text: "Autopause", switchValue: true, action: { _ in })
+            SwitchRow(text: "Autopause", switchValue: autopause, action: didSwitchSwitch())
         ]),
         
         RadioSection(title: "Precisión GPS", options: [
@@ -60,7 +62,7 @@ final class OptionsViewController: QuickTableViewController {
         ], footer: "Elige el nivel de precisión del GPS."),
 
         Section(title: "Conectividad", rows: [
-            NavigationRow(text: "Banda HRM", detailText: .none, icon: .image(UIImage(systemName: "heart")!), action: { [weak self] _ in
+            NavigationRow(text: "MI Band 2", detailText: .none, icon: .image(UIImage(systemName: "heart")!), action: { [weak self] _ in
             let resultViewController = storyBoard.instantiateViewController(withIdentifier: "HRMViewController") as! HRMViewController
             self?.navigationController?.pushViewController(resultViewController, animated: true) })
         ]),
@@ -84,6 +86,18 @@ final class OptionsViewController: QuickTableViewController {
                         break
                     default:
                         break
+                }
+            }
+        }
+    }
+    
+    private func didSwitchSwitch() -> (Row) -> Void {
+        return { [weak self] in
+            if let row = $0 as? SwitchRowCompatible {
+                if row.switchValue {
+                    self!.defaults.set(true, forKey: AutopauseConstants.AUTOPAUSE_KEY.raw())
+                } else {
+                    self!.defaults.set(false, forKey: AutopauseConstants.AUTOPAUSE_KEY.raw())
                 }
             }
         }

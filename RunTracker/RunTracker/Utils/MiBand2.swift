@@ -44,7 +44,9 @@ class MiBand2{
     
     func measureHeartRate(){
         if let service = peripheral.services?.first(where: {$0.uuid == MiBand2Service.UUID_SERVICE_HEART_RATE}), let characteristic = service.characteristics?.first(where: {$0.uuid == MiBand2Service.UUID_CHARACTERISTIC_HEART_RATE_CONTROL}){
+            
             let data = NSData(bytes: MiBand2Service.COMMAND_START_HEART_RATE_MEASUREMENT, length: MiBand2Service.COMMAND_START_HEART_RATE_MEASUREMENT.count)
+            
             peripheral.writeValue(data as Data, for: characteristic, type: .withResponse)
         }
     }

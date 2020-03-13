@@ -28,16 +28,17 @@
 		84BDCE1A23F4777800AE5546 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BDCE1823F4777800AE5546 /* Main.storyboard */; };
 		84BDCE1C23F4777B00AE5546 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BDCE1B23F4777B00AE5546 /* Assets.xcassets */; };
 		84BDCE1F23F4777B00AE5546 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BDCE1D23F4777B00AE5546 /* LaunchScreen.storyboard */; };
-		968DEB4199BE0137B4B3DC28 /* Pods_RunTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4558AB7D130A12B76636393B /* Pods_RunTracker.framework */; };
+		D3E8485E42F2755B21FB2F03 /* libPods-RunTracker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 519BDB54574CB9921DA28974 /* libPods-RunTracker.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1A50BAD8241BC094004A86B2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1A50BADA241BC0B1004A86B2 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		1AA0D6D3241418BE0044476C /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
-		4558AB7D130A12B76636393B /* Pods_RunTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		519BDB54574CB9921DA28974 /* libPods-RunTracker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RunTracker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E01277C240426A1004F70E0 /* RunTrackerModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RunTrackerModel.xcdatamodel; sourceTree = "<group>"; };
 		6E0127A224046C20004F70E0 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
+		842B04412418E1F30062CC5F /* QuickTableViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QuickTableViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		842EE96623FA8F410046D3C1 /* TrainingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingViewController.swift; sourceTree = "<group>"; };
 		842EE96823FA8F760046D3C1 /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		842EE96A23FA8FD80046D3C1 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -65,7 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				968DEB4199BE0137B4B3DC28 /* Pods_RunTracker.framework in Frameworks */,
+				D3E8485E42F2755B21FB2F03 /* libPods-RunTracker.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,7 +85,8 @@
 		55F605B1F6A093E05BA86091 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4558AB7D130A12B76636393B /* Pods_RunTracker.framework */,
+				842B04412418E1F30062CC5F /* QuickTableViewController.framework */,
+				519BDB54574CB9921DA28974 /* libPods-RunTracker.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -179,7 +181,6 @@
 				84BDCE0923F4777800AE5546 /* Sources */,
 				84BDCE0A23F4777800AE5546 /* Frameworks */,
 				84BDCE0B23F4777800AE5546 /* Resources */,
-				546873DEA6E4DE2C047D38A9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -257,23 +258,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		546873DEA6E4DE2C047D38A9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RunTracker/Pods-RunTracker-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RunTracker/Pods-RunTracker-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RunTracker/Pods-RunTracker-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -446,13 +430,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = D8T76T536P;
+				DEVELOPMENT_TEAM = CW7DY5Z6H4;
 				INFOPLIST_FILE = RunTracker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jgm139.RunTracker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ua.jgm139.RunTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -465,13 +449,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = D8T76T536P;
+				DEVELOPMENT_TEAM = CW7DY5Z6H4;
 				INFOPLIST_FILE = RunTracker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jgm139.RunTracker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ua.jgm139.RunTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

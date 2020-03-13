@@ -37,3 +37,9 @@ enum AccuracyGPS: String {
     func raw() -> String { self.rawValue }
 }
 
+enum AutopauseConstants: String {
+    case AUTOPAUSE_KEY = "autopause_key"
+    
+    func raw() -> String { self.rawValue }
+}
+

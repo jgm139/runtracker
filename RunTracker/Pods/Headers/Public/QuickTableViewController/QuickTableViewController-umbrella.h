@@ -1,0 +1,1 @@
+../../../Target Support Files/QuickTableViewController/QuickTableViewController-umbrella.h

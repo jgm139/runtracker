@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ProfileViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
@@ -25,64 +26,124 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        name.addTarget(self, action: #selector(textFieldDidEndEditing), for: UIControl.Event.editingDidEnd)
-        name.addTarget(self, action: #selector(textFieldDidBegin), for: UIControl.Event.editingDidBegin)
-        weight.addTarget(self, action: #selector(textFieldDidEndEditing), for: UIControl.Event.editingDidEnd)
-        weight.addTarget(self, action: #selector(textFieldDidBegin), for: UIControl.Event.editingDidBegin)
-        age.addTarget(self, action: #selector(textFieldDidEndEditing), for: UIControl.Event.editingDidEnd)
-        age.addTarget(self, action: #selector(textFieldDidBegin), for: UIControl.Event.editingDidBegin)
-        height.addTarget(self, action: #selector(textFieldDidEndEditing), for: UIControl.Event.editingDidEnd)
-        height.addTarget(self, action: #selector(textFieldDidBegin), for: UIControl.Event.editingDidBegin)
-        
         let tapView: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         self.view.addGestureRecognizer(tapView)
         
-        let appDefaults: [String:Any] = [self.name.restorationIdentifier! : "Nombre",
-                                         self.weight.restorationIdentifier! : "00",
-                                         self.age.restorationIdentifier! : "00",
-                                         self.height.restorationIdentifier! : "000",
-                                         "sex" : "men"]
-        
-        UserDefaults.standard.register(defaults: appDefaults)
-        loadUserDefaults()
+        loadData()
     }
     
     // MARK: - Methods
-    func loadUserDefaults() {
-        name.text = UserDefaults.standard.string(forKey: name.restorationIdentifier!)
-        weight.text = UserDefaults.standard.string(forKey: weight.restorationIdentifier!)
-        age.text = UserDefaults.standard.string(forKey: age.restorationIdentifier!)
-        height.text = UserDefaults.standard.string(forKey: height.restorationIdentifier!)
-        sexImage.image = UIImage(named: UserDefaults.standard.string(forKey: "sex")!)
+    func checkUserExist() -> Bool {
+        guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return false
+        }
+        let miContexto = miDelegate.persistentContainer.viewContext
+        
+        let request : NSFetchRequest<User> = NSFetchRequest(entityName:"User")
+        
+        do {
+            let user = try miContexto.fetch(request)
+            if user.count > 0 {
+                return true
+            }
+        } catch {
+            print("Error while fetching the user")
+        }
+        return false
     }
     
-    @objc func textFieldDidEndEditing(_ textField: UITextField)
-    {
-        if self.textChange != textField.text! {
-            UserDefaults.standard.set(textField.text, forKey: textField.restorationIdentifier!)
-            UserDefaults.standard.synchronize()
+    func loadData() {
+        do {
+            if checkUserExist() == true {
+                guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                    return
+                }
+                let miContexto = miDelegate.persistentContainer.viewContext
+                
+                let request : NSFetchRequest<User> = NSFetchRequest(entityName:"User")
+                
+                let user = try miContexto.fetch(request)
+                
+                self.name.text = user[0].name
+                self.weight.text = user[0].weight
+                self.age.text = user[0].age
+                self.height.text = user[0].height
+                
+                if user[0].sex == "men" {
+                    sexImage.image = UIImage(named: "men")
+                } else {
+                    sexImage.image = UIImage(named: "women")
+                }
+                
+                self.imageProfile.image = UIImage(data: user[0].image!)
+                self.imageProfile.contentMode = .scaleAspectFill
+            } else {
+                sexImage.image = UIImage(named: "men")
+            }
+        } catch {
+            print("Error while fetching the user")
         }
     }
     
-    @objc func textFieldDidBegin(_ textField: UITextField)
-    {
-        self.textChange = textField.text!
-    }
-
-    @objc func dismissKeyboard() {
-       view.endEditing(true)
+    @IBAction func saveData(_ sender: Any) {
+        guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let miContexto = miDelegate.persistentContainer.viewContext
+        
+        if self.checkUserExist() == false {
+            let user = User(context: miContexto)
+            user.name = self.name.text
+            user.weight = self.weight.text
+            user.age = self.age.text
+            user.height = self.height.text
+            
+            if sexImage.image == UIImage(named: "men") {
+                user.sex = "men"
+            } else {
+                user.sex = "women"
+            }
+          user.image = self.imageProfile.image?.pngData()
+        } else {
+            let request : NSFetchRequest<User> = NSFetchRequest(entityName:"User")
+            do {
+                let user = try miContexto.fetch(request)
+                if user.count > 0 {
+                    user[0].name = self.name.text
+                    user[0].weight = self.weight.text
+                    user[0].age = self.age.text
+                    user[0].height = self.height.text
+                    
+                    if user[0].sex == "men" {
+                        user[0].sex = "men"
+                    } else {
+                        user[0].sex = "women"
+                    }
+                    user[0].image = self.imageProfile.image?.pngData()
+                }
+            } catch {
+                print("Error while fetching the user")
+            }
+        }
+        
+        
+        do {
+           try miContexto.save()
+        } catch {
+           print("Error al guardar el contexto: \(error)")
+        }
     }
     
-    // MARK: - Actions
     @IBAction func changeSex(_ sender: UITapGestureRecognizer) {
         if sexImage.image == UIImage(named: "men") {
             sexImage.image = UIImage(named: "women")
-            UserDefaults.standard.set("women", forKey: "sex")
         } else {
             sexImage.image = UIImage(named: "men")
-            UserDefaults.standard.set("men", forKey: "sex")
         }
-        UserDefaults.standard.synchronize()
+    }
+    
+    @objc func dismissKeyboard() {
+       view.endEditing(true)
     }
     
     @IBAction func exportImage(_ sender: UITapGestureRecognizer) {
@@ -106,4 +167,5 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
             
         self.dismiss(animated: true, completion: nil)
     }
+    
 }

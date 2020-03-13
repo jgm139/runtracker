@@ -10,7 +10,7 @@ import UIKit
 import CoreBluetooth
 import QuickTableViewController
 
-class HRMViewController: QuickTableViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
+class HRMViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     // MARK: - Outlets
     @IBOutlet weak var vConnection: UIImageView!
@@ -27,7 +27,7 @@ class HRMViewController: QuickTableViewController, CBCentralManagerDelegate, CBP
     // MARK: - View Controller methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Banda HRM"
+        navigationItem.title = "MI Band 2"
         
         centralManager = CBCentralManager()
         centralManager.delegate = self
@@ -55,6 +55,8 @@ class HRMViewController: QuickTableViewController, CBCentralManagerDelegate, CBP
                 vBattery.image = UIImage(named: "batteryUnknown")
                 break
         }
+        
+        self.lBattery.text = battery.description + "%"
     }
     
     func updateHeartRate(_ heartRate: Int) {
@@ -85,6 +87,12 @@ class HRMViewController: QuickTableViewController, CBCentralManagerDelegate, CBP
         self.vHeartRate.layer.removeAllAnimations()
     }
     
+    // MARK: - Actions
+    @IBAction func getHRM(_ sender: Any) {
+        miBand.measureHeartRate()
+        self.startHeartBeatAnimation()
+    }
+    
     // MARK: - Central Manager Delegate
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
@@ -104,7 +112,7 @@ class HRMViewController: QuickTableViewController, CBCentralManagerDelegate, CBP
         }
     }
     
-    private func centralManager(_ central: CBPeripheral, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
         if peripheral.name == "MI Band 2" {
             miBand = MiBand2(peripheral)
@@ -118,6 +126,8 @@ class HRMViewController: QuickTableViewController, CBCentralManagerDelegate, CBP
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         miBand.peripheral.delegate = self
         miBand.peripheral.discoverServices(nil)
+        self.lConnection.text = miBand.peripheral.name
+        self.vConnection.image = UIImage(named: "connectionFilled")
     }
     
     // MARK: - Peripheral Delegate
@@ -133,15 +143,15 @@ class HRMViewController: QuickTableViewController, CBCentralManagerDelegate, CBP
         if let characteristics = service.characteristics {
             for cc in characteristics {
                 switch cc.uuid.uuidString {
-                case MiBand2Service.UUID_CHARACTERISTIC_6_BATTERY_INFO.uuidString:
-                    peripheral.readValue(for: cc)
-                    break
-                case MiBand2Service.UUID_CHARACTERISTIC_HEART_RATE_DATA.uuidString:
-                    peripheral.setNotifyValue(true, for: cc)
-                    break
-                default:
-                    print("Service: " + service.uuid.uuidString + " Characteristic: " + cc.uuid.uuidString)
-                    break
+                    case MiBand2Service.UUID_CHARACTERISTIC_6_BATTERY_INFO.uuidString:
+                        peripheral.readValue(for: cc)
+                        break
+                    case MiBand2Service.UUID_CHARACTERISTIC_HEART_RATE_DATA.uuidString:
+                        peripheral.setNotifyValue(true, for: cc)
+                        break
+                    default:
+                        print("Service: " + service.uuid.uuidString + " Characteristic: " + cc.uuid.uuidString)
+                        break
                 }
             }
         }

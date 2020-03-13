@@ -1,4 +1,4 @@
-framework module Pods_RunTracker {
+module Pods_RunTracker {
   umbrella header "Pods-RunTracker-umbrella.h"
 
   export *

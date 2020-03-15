@@ -16,6 +16,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     
     // MARK: - Outlets
     @IBOutlet weak var buttonPlay: UIButton!
+    @IBOutlet weak var buttonStop: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var rateLabel: UILabel!
@@ -48,14 +49,16 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.buttonPlay.tintColor = UIColor.init(red: 30/255, green: 160/255, blue: 0, alpha: 1)
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressPlay))
         longPress.minimumPressDuration = 1.5
-        self.buttonPlay.addGestureRecognizer(longPress)
-        self.buttonPlay.tintColor = UIColor.init(red: 30/255, green: 160/255, blue: 0, alpha: 1)
+        self.buttonStop.addGestureRecognizer(longPress)
         
-        self.view.addSubview(mapView)
-        self.view.addSubview(buttonPlay)
-        self.view.insertSubview(buttonPlay, aboveSubview: self.mapView)
+        self.view.addSubview(self.mapView)
+        self.view.addSubview(self.buttonPlay)
+        self.view.addSubview(self.buttonStop)
+        self.view.insertSubview(self.buttonPlay, aboveSubview: self.mapView)
+        self.view.insertSubview(self.buttonStop, aboveSubview: self.mapView)
         
         self.mapView.delegate = self
         self.mapView.showsUserLocation = true
@@ -161,12 +164,14 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
             timer.invalidate()
             self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle.fill"), for: UIControl.State.normal)
             self.buttonPlay.tintColor = UIColor.init(red: 30/255, green: 160/255, blue: 0, alpha: 1)
+            self.buttonStop.isHidden = false
             self.isTimerRunning = false
             self.isPaused = true
         } else {
             runTimer()
             self.buttonPlay.setBackgroundImage(UIImage(systemName:"pause.circle.fill"), for: UIControl.State.normal)
             self.buttonPlay.tintColor = UIColor.orange
+            self.buttonStop.isHidden = true
             self.isTimerRunning = true
             stepCounter()
             saved = false
@@ -186,29 +191,39 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     
     // MARK: - Methods
     @objc func longPressPlay(){
-        if self.isTimerRunning == true {
-            if saved == false {
-                saveCoreData()
-                saved = true
-            }
-            stopTimer()
-            self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle.fill"), for: UIControl.State.normal)
-            self.buttonPlay.tintColor = UIColor.init(red: 30/255, green: 160/255, blue: 0, alpha: 1)
-            self.isTimerRunning = false
-            self.startLocation = nil
-            self.distanceTraveled = 0;
-            self.distanceLabel.text = "0,000"
-            self.timeLabel.text = "00:00:00"
-            self.rateLabel.text = "0,0"
-            self.steps = 0
-            self.cadenceLabel.text = String(self.steps)
-            self.rate = 0
-            self.mapView.removeOverlays(self.mapView.overlays)
-            self.mapView.removeAnnotations(self.mapView.annotations)
-            self.locationsHistory = []
-            self.locationsIsPaused = []
-            self.isPaused = false
+        
+        self.buttonStop.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+
+        UIView.animate(withDuration: 1.0, delay: 0,
+                                    usingSpringWithDamping: CGFloat(0.20),
+                                    initialSpringVelocity: CGFloat(6.0),
+                                    options: UIView.AnimationOptions.allowUserInteraction,
+                                    animations: {
+                                        self.buttonStop.transform = CGAffineTransform.identity
+            },
+                                   completion: { Void in(self.buttonStop.isHidden = true)  }
+        )
+        if saved == false {
+            saveCoreData()
+            saved = true
         }
+        stopTimer()
+        self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle.fill"), for: UIControl.State.normal)
+        self.buttonPlay.tintColor = UIColor.init(red: 30/255, green: 160/255, blue: 0, alpha: 1)
+        self.isTimerRunning = false
+        self.startLocation = nil
+        self.distanceTraveled = 0;
+        self.distanceLabel.text = "0,000"
+        self.timeLabel.text = "00:00:00"
+        self.rateLabel.text = "0,0"
+        self.steps = 0
+        self.cadenceLabel.text = String(self.steps)
+        self.rate = 0
+        self.mapView.removeOverlays(self.mapView.overlays)
+        self.mapView.removeAnnotations(self.mapView.annotations)
+        self.locationsHistory = []
+        self.locationsIsPaused = []
+        self.isPaused = false
     }
     
     func stopTimer() {
@@ -274,6 +289,8 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
             
             location.history = history
             history.addToLocations(location)
+            history.user = UserSingleton.userSingleton
+            UserSingleton.userSingleton.addToHistories(history)
         }
         do {
            try miContexto.save()

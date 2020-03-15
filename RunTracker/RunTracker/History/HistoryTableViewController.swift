@@ -21,15 +21,7 @@ class HistoryTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let miContexto = miDelegate.persistentContainer.viewContext
-        
-        let request : NSFetchRequest<History> = NSFetchRequest(entityName:"History")
-        //"miContexto" es el contexto de Core Data
-        //FALTA el código que obtiene "miContexto", como se ha hecho en ejemplos anteriores
-        listHistory = try? miContexto.fetch(request) 
+        listHistory = UserSingleton.userSingleton.histories?.allObjects as? [History]
         tableView.reloadData()
     }
 
@@ -103,8 +95,6 @@ class HistoryTableViewController: UITableViewController {
         let miContexto = miDelegate.persistentContainer.viewContext
         
         let request : NSFetchRequest<History> = NSFetchRequest(entityName:"History")
-        //"miContexto" es el contexto de Core Data
-        //FALTA el código que obtiene "miContexto", como se ha hecho en ejemplos anteriores
         listHistory = try? miContexto.fetch(request) 
         
         for history in listHistory{

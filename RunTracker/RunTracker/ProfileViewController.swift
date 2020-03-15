@@ -33,56 +33,20 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     }
     
     // MARK: - Methods
-    func checkUserExist() -> Bool {
-        guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return false
-        }
-        let miContexto = miDelegate.persistentContainer.viewContext
-        
-        let request : NSFetchRequest<User> = NSFetchRequest(entityName:"User")
-        
-        do {
-            let user = try miContexto.fetch(request)
-            if user.count > 0 {
-                return true
-            }
-        } catch {
-            print("Error while fetching the user")
-        }
-        return false
-    }
-    
     func loadData() {
-        do {
-            if checkUserExist() == true {
-                guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                    return
-                }
-                let miContexto = miDelegate.persistentContainer.viewContext
-                
-                let request : NSFetchRequest<User> = NSFetchRequest(entityName:"User")
-                
-                let user = try miContexto.fetch(request)
-                
-                self.name.text = user[0].name
-                self.weight.text = user[0].weight
-                self.age.text = user[0].age
-                self.height.text = user[0].height
-                
-                if user[0].sex == "men" {
-                    sexImage.image = UIImage(named: "men")
-                } else {
-                    sexImage.image = UIImage(named: "women")
-                }
-                
-                self.imageProfile.image = UIImage(data: user[0].image!)
-                self.imageProfile.contentMode = .scaleAspectFill
-            } else {
-                sexImage.image = UIImage(named: "men")
-            }
-        } catch {
-            print("Error while fetching the user")
+        self.name.text = UserSingleton.userSingleton.name
+        self.weight.text = UserSingleton.userSingleton.weight
+        self.age.text = UserSingleton.userSingleton.age
+        self.height.text = UserSingleton.userSingleton.height
+        
+        if UserSingleton.userSingleton.sex == "men" {
+            sexImage.image = UIImage(named: "men")
+        } else {
+            sexImage.image = UIImage(named: "women")
         }
+        
+        self.imageProfile.image = UIImage(data: UserSingleton.userSingleton.image!)
+        self.imageProfile.contentMode = .scaleAspectFill
     }
     
     @IBAction func saveData(_ sender: Any) {
@@ -91,41 +55,30 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         }
         let miContexto = miDelegate.persistentContainer.viewContext
         
-        if self.checkUserExist() == false {
-            let user = User(context: miContexto)
-            user.name = self.name.text
-            user.weight = self.weight.text
-            user.age = self.age.text
-            user.height = self.height.text
+        let request : NSFetchRequest<User> = NSFetchRequest(entityName:"User")
+        do {
+            let users = try miContexto.fetch(request)
             
-            if sexImage.image == UIImage(named: "men") {
-                user.sex = "men"
-            } else {
-                user.sex = "women"
-            }
-          user.image = self.imageProfile.image?.pngData()
-        } else {
-            let request : NSFetchRequest<User> = NSFetchRequest(entityName:"User")
-            do {
-                let user = try miContexto.fetch(request)
-                if user.count > 0 {
-                    user[0].name = self.name.text
-                    user[0].weight = self.weight.text
-                    user[0].age = self.age.text
-                    user[0].height = self.height.text
+            for user in users {
+                if user == UserSingleton.userSingleton {
+                    user.name = self.name.text
+                    user.weight = self.weight.text
+                    user.age = self.age.text
+                    user.height = self.height.text
                     
-                    if user[0].sex == "men" {
-                        user[0].sex = "men"
+                    if user.sex == "men" {
+                        user.sex = "men"
                     } else {
-                        user[0].sex = "women"
+                        user.sex = "women"
                     }
-                    user[0].image = self.imageProfile.image?.pngData()
+                    user.image = self.imageProfile.image?.pngData()
+                    
+                    UserSingleton.userSingleton = user
                 }
-            } catch {
-                print("Error while fetching the user")
             }
+        } catch {
+            print("Error buscando usuarios")
         }
-        
         
         do {
            try miContexto.save()

@@ -35,6 +35,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     var rate:Double = 0
     var saved = false
     var isPaused = false
+    var playStop = true
     
     // MARK: - Location Variables
     fileprivate let locationManager: CLLocationManager = {
@@ -44,6 +45,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     }()
     private var locationsHistory: [CLLocation] = []
     private var locationsIsPaused: [Bool] = []
+    private var locationsDate: [Date] = []
     
     // MARK: - View Controller methods
     override func viewDidLoad() {
@@ -51,8 +53,10 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         
         self.buttonPlay.tintColor = UIColor.init(red: 30/255, green: 160/255, blue: 0, alpha: 1)
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressPlay))
-        longPress.minimumPressDuration = 1.5
+        longPress.minimumPressDuration = 2
         self.buttonStop.addGestureRecognizer(longPress)
+        self.buttonStop.addTarget(self, action: Selector(("startStopAnimation")), for: .touchDown)
+        self.buttonStop.addTarget(self, action: Selector(("pauseStopAnimation")), for: .touchUpInside)
         
         self.view.addSubview(self.mapView)
         self.view.addSubview(self.buttonPlay)
@@ -101,6 +105,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
                 self.mapView.addAnnotation(startPoint)
                 self.locationsHistory.append(self.startLocation)
                 self.locationsIsPaused.append(self.isPaused)
+                self.locationsDate.append(Date())
             } else {
                 for newLocation in locations {
                     if newLocation.horizontalAccuracy < 20 && newLocation.horizontalAccuracy >= 0 && newLocation.verticalAccuracy < 5 {
@@ -119,6 +124,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
                             mapView.addOverlay(polyline)
                         }
                         self.locationsHistory.append(newLocation)
+                        self.locationsDate.append(Date())
                         let km = Double(floor(distanceTraveled)/1000)
                         distanceLabel.text = NSString.localizedStringWithFormat("%.3f", km) as String
                     }
@@ -177,6 +183,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
             saved = false
         }
         self.buttonPlay.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+        self.buttonStop.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
 
         UIView.animate(withDuration: 2.0, delay: 0,
                                     usingSpringWithDamping: CGFloat(0.20),
@@ -184,25 +191,46 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
                                     options: UIView.AnimationOptions.allowUserInteraction,
                                     animations: {
                                         self.buttonPlay.transform = CGAffineTransform.identity
+                                        self.buttonStop.transform = CGAffineTransform.identity
             },
                                    completion: { Void in()  }
         )
     }
     
     // MARK: - Methods
+    @objc func startStopAnimation() {
+        UIView.animate(withDuration: 2,
+        animations: {
+            self.buttonStop.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+        },
+        completion: { _ in
+            if self.playStop == true {
+                UIView.animate(withDuration: 0.5, delay: 0,
+                                            usingSpringWithDamping: CGFloat(0.20),
+                                            initialSpringVelocity: CGFloat(6.0),
+                                            options: UIView.AnimationOptions.allowUserInteraction,
+                                            animations: {
+                                                self.buttonStop.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+                                            },
+                                            completion: { _ in
+                                                self.buttonStop.transform = CGAffineTransform.identity
+                                                self.buttonStop.isHidden = true
+                                            }
+                )
+            } else {
+                self.buttonStop.transform = CGAffineTransform.identity
+            }
+        })
+    }
+    
+    @objc func pauseStopAnimation() {
+        self.buttonStop.layer.removeAllAnimations()
+        self.view.layer.removeAllAnimations()
+        self.view.layoutIfNeeded()
+        self.playStop = false
+    }
+    
     @objc func longPressPlay(){
-        
-        self.buttonStop.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
-
-        UIView.animate(withDuration: 1.0, delay: 0,
-                                    usingSpringWithDamping: CGFloat(0.20),
-                                    initialSpringVelocity: CGFloat(6.0),
-                                    options: UIView.AnimationOptions.allowUserInteraction,
-                                    animations: {
-                                        self.buttonStop.transform = CGAffineTransform.identity
-            },
-                                   completion: { Void in(self.buttonStop.isHidden = true)  }
-        )
         if saved == false {
             saveCoreData()
             saved = true
@@ -223,7 +251,9 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         self.mapView.removeAnnotations(self.mapView.annotations)
         self.locationsHistory = []
         self.locationsIsPaused = []
+        self.locationsDate = []
         self.isPaused = false
+        self.playStop = true
     }
     
     func stopTimer() {
@@ -284,6 +314,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
             location.longitude = data.coordinate.longitude
             location.id = Int16(idLocation)
             location.isPaused = self.locationsIsPaused[idLocation]
+            location.date = self.locationsDate[idLocation]
             
             idLocation += 1
             

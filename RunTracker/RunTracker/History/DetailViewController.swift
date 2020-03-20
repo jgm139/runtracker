@@ -25,6 +25,8 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
     var rate = 0.0
     var steps = 0
     var locationsHistory: [Location] = []
+    var maxSpeed = 0.0
+    var actualSpeed = 0.0
     
     // MARK: - View Controller methods
     override func viewDidLoad() {
@@ -41,26 +43,77 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
         
         locationsHistory = locationsHistory.sorted(by: { ($0.id < $1.id) })
         
+        self.calculateMaxSpeed()
         self.drawOverlays()
     }
     
     // MARK: - Methods
-    func drawOverlays(){
+    func calculateMaxSpeed() {
         if var previousLocation = self.locationsHistory.first {
             for location in self.locationsHistory {
-                var area:[CLLocationCoordinate2D]
-                if location.isPaused == true {
+                if location != self.locationsHistory[self.locationsHistory.count-1] {
+                    let timeDiference = location.date?.timeIntervalSince(previousLocation.date!)
+                    let hours = ((timeDiference!/60)/60)
+                    
                     let newCLLocation: CLLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
-                    area = [newCLLocation.coordinate, newCLLocation.coordinate]
-                } else {
                     let previousCLLocation: CLLocation = CLLocation(latitude: previousLocation.latitude, longitude: previousLocation.longitude)
-                    let newCLLocation: CLLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
-                    area = [previousCLLocation.coordinate, newCLLocation.coordinate]
+                    
+                    let distanceDiference = newCLLocation.distance(from: previousCLLocation)
+                    let km = Double(floor(distanceDiference)/1000)
+                    
+                    if maxSpeed < (km/hours) {
+                        self.maxSpeed = km/hours
+                        print("Max: " + String(self.maxSpeed))
+                    }
                 }
-                let polyline = MKPolyline(coordinates: &area, count: area.count)
-                mapView.addOverlay(polyline)
                 previousLocation = location
             }
+        }
+    }
+    
+    func drawOverlays(){
+        if var previousLocation = self.locationsHistory.first {
+            var polylines:[MKOverlay] = []
+            for location in self.locationsHistory {
+                var area:[CLLocationCoordinate2D]
+                var newCLLocation: CLLocation
+                var previousCLLocation: CLLocation
+                if location.isPaused == true {
+                    newCLLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+                    previousCLLocation = CLLocation(latitude: 0, longitude: 0)
+                    area = [newCLLocation.coordinate, newCLLocation.coordinate]
+                } else {
+                    previousCLLocation = CLLocation(latitude: previousLocation.latitude, longitude: previousLocation.longitude)
+                    newCLLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+                    area = [previousCLLocation.coordinate, newCLLocation.coordinate]
+                }
+                
+                if location != self.locationsHistory[self.locationsHistory.count-1] {
+                    let timeDiference = location.date?.timeIntervalSince(previousLocation.date!)
+                    let hours = ((timeDiference!/60)/60)
+                    
+                    var distanceDiference = 0.0
+                    if location.isPaused != true {
+                        distanceDiference = previousCLLocation.distance(from: newCLLocation)
+                    }
+                    let km = Double(floor(distanceDiference)/1000)
+                    
+                    self.actualSpeed = km/hours
+                    print(self.actualSpeed)
+                }
+                let polyline = CustomPolyline(coordinates: area, count: area.count)
+
+                if self.actualSpeed >= self.maxSpeed - 2 {
+                    polyline.color = UIColor.red
+                } else {
+                    polyline.color = UIColor.yellow
+                }
+                
+                polylines.append(polyline)
+                previousLocation = location
+            }
+            mapView.addOverlays(polylines)
+            
             let centerLocation = CLLocationCoordinate2D(latitude: self.locationsHistory.first!.latitude, longitude: self.locationsHistory.first!.longitude)
 
             let viewRegion = MKCoordinateRegion(center: centerLocation, latitudinalMeters: 200, longitudinalMeters: 200)
@@ -91,14 +144,15 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: - Map View Delegate
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-         if (overlay is MKPolyline) {
-             let pr = MKPolylineRenderer(overlay: overlay)
-             pr.strokeColor = UIColor.red
-             pr.lineWidth = 5
-             return pr
-         } else {
-             return MKOverlayRenderer(overlay: overlay)
-         }
+        if (overlay is MKPolyline) {
+            let pr = MKPolylineRenderer(overlay: overlay)
+            let overlayColor = overlay as? CustomPolyline
+            pr.strokeColor = overlayColor?.color
+            pr.lineWidth = 5
+            return pr
+        } else {
+            return MKOverlayRenderer(overlay: overlay)
+        }
      }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

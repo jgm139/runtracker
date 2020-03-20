@@ -10,6 +10,7 @@
 		1A50BAD9241BC094004A86B2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50BAD8241BC094004A86B2 /* LoginViewController.swift */; };
 		1A50BADB241BC0B1004A86B2 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50BADA241BC0B1004A86B2 /* RegisterViewController.swift */; };
 		1AA0D6D4241418BE0044476C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA0D6D3241418BE0044476C /* DetailViewController.swift */; };
+		1AA382AF2424F2F4002E53E7 /* CustomPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA382AE2424F2F4002E53E7 /* CustomPolyline.swift */; };
 		1AADADAE241D104A0003AFF4 /* UserSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AADADAD241D104A0003AFF4 /* UserSingleton.swift */; };
 		1AADADB0241D7DBC0003AFF4 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AADADAF241D7DBC0003AFF4 /* FirstViewController.swift */; };
 		6E01277D240426A1004F70E0 /* RunTrackerModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E01277B240426A1004F70E0 /* RunTrackerModel.xcdatamodeld */; };
@@ -37,6 +38,7 @@
 		1A50BAD8241BC094004A86B2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1A50BADA241BC0B1004A86B2 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		1AA0D6D3241418BE0044476C /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		1AA382AE2424F2F4002E53E7 /* CustomPolyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPolyline.swift; sourceTree = "<group>"; };
 		1AADADAD241D104A0003AFF4 /* UserSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSingleton.swift; sourceTree = "<group>"; };
 		1AADADAF241D7DBC0003AFF4 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		519BDB54574CB9921DA28974 /* libPods-RunTracker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RunTracker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,6 +146,7 @@
 				84C0C03823FC58AF0063FDF0 /* Options */,
 				842EE96A23FA8FD80046D3C1 /* ProfileViewController.swift */,
 				842EE96623FA8F410046D3C1 /* TrainingViewController.swift */,
+				1AA382AE2424F2F4002E53E7 /* CustomPolyline.swift */,
 				1A50BAD7241BC05E004A86B2 /* Users */,
 				6E0127A124046B4F004F70E0 /* History */,
 				84BDCE1B23F4777B00AE5546 /* Assets.xcassets */,
@@ -289,6 +292,7 @@
 				843D878424156EC100BE1612 /* OptionsConstants.swift in Sources */,
 				1AA0D6D4241418BE0044476C /* DetailViewController.swift in Sources */,
 				1AADADB0241D7DBC0003AFF4 /* FirstViewController.swift in Sources */,
+				1AA382AF2424F2F4002E53E7 /* CustomPolyline.swift in Sources */,
 				1A50BAD9241BC094004A86B2 /* LoginViewController.swift in Sources */,
 				84BDCE1323F4777800AE5546 /* SceneDelegate.swift in Sources */,
 				8449C97524101CDE00089C25 /* GestorPicker.swift in Sources */,

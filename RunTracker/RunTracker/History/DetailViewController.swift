@@ -103,10 +103,14 @@ class DetailViewController: UIViewController, MKMapViewDelegate {
                 }
                 let polyline = CustomPolyline(coordinates: area, count: area.count)
 
-                if self.actualSpeed >= self.maxSpeed - 2 {
+                if self.actualSpeed >= self.maxSpeed * 3/4 {
                     polyline.color = UIColor.red
-                } else {
+                } else if self.actualSpeed >= self.maxSpeed * 2/4 {
+                    polyline.color = UIColor.orange
+                } else if self.actualSpeed >= self.maxSpeed * 1/4 {
                     polyline.color = UIColor.yellow
+                } else {
+                    polyline.color = UIColor.green
                 }
                 
                 polylines.append(polyline)

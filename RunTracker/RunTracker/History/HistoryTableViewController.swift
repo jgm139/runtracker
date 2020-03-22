@@ -22,6 +22,7 @@ class HistoryTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         listHistory = UserSingleton.userSingleton.histories?.allObjects as? [History]
+        listHistory.sort(by: {$0.date!.timeIntervalSinceNow > $1.date!.timeIntervalSinceNow})
         tableView.reloadData()
     }
 
@@ -57,8 +58,10 @@ class HistoryTableViewController: UITableViewController {
             
             do{
                 miContexto.delete(listHistory[indexPath.row])
+                listHistory.remove(at: indexPath.row)
                 do {
                     try miContexto.save()
+                    tableView.reloadData()
                 } catch {
                     print(error)
                 }

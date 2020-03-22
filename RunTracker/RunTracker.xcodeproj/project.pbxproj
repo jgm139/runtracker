@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,6 +23,7 @@
 		84559232240BD2280051B806 /* HRMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84559231240BD2280051B806 /* HRMViewController.swift */; };
 		846A10782406ED160080E47E /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846A10772406ED160080E47E /* OptionsViewController.swift */; };
 		846A107A2406FB220080E47E /* CadenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846A10792406FB220080E47E /* CadenceViewController.swift */; };
+		846B9FE3241CDA870091D854 /* OptionsValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846B9FE2241CDA870091D854 /* OptionsValues.swift */; };
 		84BDCE1123F4777800AE5546 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDCE1023F4777800AE5546 /* AppDelegate.swift */; };
 		84BDCE1323F4777800AE5546 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDCE1223F4777800AE5546 /* SceneDelegate.swift */; };
 		84BDCE1A23F4777800AE5546 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BDCE1823F4777800AE5546 /* Main.storyboard */; };
@@ -50,6 +51,7 @@
 		84559231240BD2280051B806 /* HRMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HRMViewController.swift; sourceTree = "<group>"; };
 		846A10772406ED160080E47E /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		846A10792406FB220080E47E /* CadenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadenceViewController.swift; sourceTree = "<group>"; };
+		846B9FE2241CDA870091D854 /* OptionsValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsValues.swift; sourceTree = "<group>"; };
 		84BDCE0D23F4777800AE5546 /* RunTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84BDCE1023F4777800AE5546 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84BDCE1223F4777800AE5546 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			children = (
 				844D87C02416A4970042EAEC /* MiBand2.swift */,
 				844D87C12416A4970042EAEC /* MiBand2Service.swift */,
+				846B9FE2241CDA870091D854 /* OptionsValues.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				846B9FE3241CDA870091D854 /* OptionsValues.swift in Sources */,
 				846A107A2406FB220080E47E /* CadenceViewController.swift in Sources */,
 				842EE96923FA8F760046D3C1 /* HistoryTableViewController.swift in Sources */,
 				842EE96723FA8F410046D3C1 /* TrainingViewController.swift in Sources */,

@@ -35,7 +35,7 @@ class GestorPicker: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if row > 0 {
             AudioServicesPlaySystemSound (listSounds[row].soundID)
-            
+            print("SystemSoundID \(listSounds[row].soundID)")
             switch fromVC {
                 case "CadenceViewController":
                     defaults.set(listSounds[row].soundID, forKey: CadenceConstants.CADENCE_SOUND_NOTIFICATIONS.rawValue)

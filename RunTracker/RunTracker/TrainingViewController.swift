@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 import MapKit
 import CoreLocation
 import CoreMotion
@@ -26,15 +27,19 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     // MARK: - Variables
     var timer = Timer()
     var seconds = 0
+    var seconds_acumulated = 0
+    var seconds_paused = 0
     var isTimerRunning = false
     var startLocation: CLLocation!
     var distanceTraveled: Double = 0
+    var distance_acumulated: Double = 0
     var pedometer = CMPedometer()
     var activityManager = CMMotionActivityManager()
     var steps = 0
-    var rate:Double = 0
+    var rate: Double = 0
     var saved = false
     var isPaused = false
+    var optionsValues: OptionsValues?
     var playStop = true
     
     // MARK: - Location Variables
@@ -51,8 +56,8 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.buttonPlay.tintColor = UIColor.init(red: 30/255, green: 160/255, blue: 0, alpha: 1)
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressPlay))
+        self.buttonPlay.tintColor = UIColor.MyPalette.spanishGreen
         longPress.minimumPressDuration = 2
         self.buttonStop.addGestureRecognizer(longPress)
         self.buttonStop.addTarget(self, action: Selector(("startStopAnimation")), for: .touchDown)
@@ -70,11 +75,14 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         self.mapView.showsScale = true
         self.mapView.userTrackingMode = .follow
         
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.showsBackgroundLocationIndicator = true
-        locationManager.allowsBackgroundLocationUpdates = true
-        
+        self.locationManager.delegate = self
+        self.locationManager.showsBackgroundLocationIndicator = true
+        self.locationManager.allowsBackgroundLocationUpdates = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.optionsValues = OptionsValues()
+        setAccuracyGPS()
     }
     
     // MARK: - Location Manager Delegate
@@ -119,6 +127,9 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
                             } else {
                                 area = [previousPoint.coordinate, newLocation.coordinate]
                                 self.distanceTraveled += newLocation.distance(from: previousPoint)
+                                self.distance_acumulated += newLocation.distance(from: previousPoint)
+                                //Notificar distancia
+                                self.notifyIntervals()
                             }
                             let polyline = MKPolyline(coordinates: &area, count: area.count)
                             mapView.addOverlay(polyline)
@@ -168,14 +179,14 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     @IBAction func actionPlay(_ sender: Any) {
         if self.isTimerRunning == true {
             timer.invalidate()
-            self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle.fill"), for: UIControl.State.normal)
-            self.buttonPlay.tintColor = UIColor.init(red: 30/255, green: 160/255, blue: 0, alpha: 1)
+            self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle"), for: UIControl.State.normal)
+            self.buttonPlay.tintColor = UIColor.MyPalette.spanishGreen
             self.buttonStop.isHidden = false
             self.isTimerRunning = false
             self.isPaused = true
         } else {
             runTimer()
-            self.buttonPlay.setBackgroundImage(UIImage(systemName:"pause.circle.fill"), for: UIControl.State.normal)
+            self.buttonPlay.setBackgroundImage(UIImage(systemName:"pause.circle"), for: UIControl.State.normal)
             self.buttonPlay.tintColor = UIColor.orange
             self.buttonStop.isHidden = true
             self.isTimerRunning = true
@@ -236,8 +247,8 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
             saved = true
         }
         stopTimer()
-        self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle.fill"), for: UIControl.State.normal)
-        self.buttonPlay.tintColor = UIColor.init(red: 30/255, green: 160/255, blue: 0, alpha: 1)
+        self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle"), for: UIControl.State.normal)
+        self.buttonPlay.tintColor = UIColor.MyPalette.spanishGreen
         self.isTimerRunning = false
         self.startLocation = nil
         self.distanceTraveled = 0;
@@ -266,7 +277,10 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
             self.seconds += 1
             self.timeLabel.text = self.timeString(time: TimeInterval(self.seconds)) //Actualizamos el label.
-            let min:Double = Double(self.seconds)/60
+            let min: Double = Double(self.seconds)/60
+            self.seconds_acumulated += 1
+            // Notificar tiempo
+            self.notifyIntervals()
             let km = Double(floor(self.distanceTraveled)/1000)
             self.rate = Double(min/km)
             self.rateLabel.text = NSString.localizedStringWithFormat("%.1f", self.rate) as String
@@ -280,17 +294,78 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
     }
     
-    func stepCounter(){
+    func stepCounter() {
         if CMPedometer.isStepCountingAvailable() {
             OperationQueue().addOperation {
                 self.pedometer.startUpdates(from: Date()) {
                     (data, error) in
+                    self.steps = Int((data?.numberOfSteps.doubleValue)!)
+                    let min: Double = Double(self.seconds)/60
+                    let cadence = Double(self.steps)/min
+                    self.checkCadence(cadence)
                     OperationQueue.main.addOperation {
-                        let min:Double = Double(self.seconds)/60
-                        self.cadenceLabel.text = String((data?.numberOfSteps.doubleValue)!/min)
+                        self.cadenceLabel.text = String(cadence)
                     }
                 }
             }
+        }
+    }
+    
+    // MARK: Set options
+    func notifyIntervals() {
+        if let measure = optionsValues?.getIntervalValues()?.measure {
+            if measure == "TIME" {
+                if let timeValue = optionsValues?.getIntervalValues()?.measureValue {
+                    if timeValue == Int(seconds_acumulated/60) {
+                        seconds_acumulated = 0
+                        playNotificationSound(useNotifications: optionsValues?.getIntervalValues()?.useNotifications, sound: optionsValues?.getIntervalValues()?.idSound)
+                    }
+                }
+            } else if measure == "DISTANCE" {
+                if let distanceValue = optionsValues?.getIntervalValues()?.measureValue {
+                    if distanceValue == Int(distance_acumulated) {
+                        distance_acumulated = 0
+                        playNotificationSound(useNotifications: optionsValues?.getIntervalValues()?.useNotifications, sound: optionsValues?.getIntervalValues()?.idSound)
+                    }
+                }
+            }
+        }
+    }
+    
+    func checkCadence(_ cadence: Double) {
+        if let cadenceValue = optionsValues?.getCadenceValues().cadence {
+            if cadenceValue > Int(cadence) {
+                playNotificationSound(useNotifications: optionsValues?.getCadenceValues().useNotifications, sound: optionsValues?.getCadenceValues().idSound)
+            }
+        }
+    }
+    
+    func playNotificationSound(useNotifications: Bool?, sound: SystemSoundID?) {
+        if let u = useNotifications {
+            if u {
+                if let s = sound {
+                    AudioServicesPlaySystemSound(s)
+                }
+            } else {
+                AudioServicesPlayAlertSoundWithCompletion(SystemSoundID(kSystemSoundID_Vibrate)) { }
+            }
+        }
+    }
+    
+    func setAccuracyGPS() {
+        switch optionsValues?.getGPSAccuracy() {
+            case AccuracyGPS.GPS_OPTIMUM.raw():
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                break
+            case AccuracyGPS.GPS_MEDIUM.raw():
+                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                break
+            case AccuracyGPS.GPS_LOW.raw():
+                locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+                break
+            default:
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                break
         }
     }
     

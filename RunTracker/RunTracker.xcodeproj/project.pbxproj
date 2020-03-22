@@ -15,6 +15,7 @@
 		1AADADB0241D7DBC0003AFF4 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AADADAF241D7DBC0003AFF4 /* FirstViewController.swift */; };
 		6E01277D240426A1004F70E0 /* RunTrackerModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E01277B240426A1004F70E0 /* RunTrackerModel.xcdatamodeld */; };
 		6E0127A324046C20004F70E0 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0127A224046C20004F70E0 /* HistoryTableViewCell.swift */; };
+		84211790242791360053AA2D /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8421178F242791360053AA2D /* Colours.swift */; };
 		842EE96723FA8F410046D3C1 /* TrainingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EE96623FA8F410046D3C1 /* TrainingViewController.swift */; };
 		842EE96923FA8F760046D3C1 /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EE96823FA8F760046D3C1 /* HistoryTableViewController.swift */; };
 		842EE96B23FA8FD80046D3C1 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EE96A23FA8FD80046D3C1 /* ProfileViewController.swift */; };
@@ -26,6 +27,7 @@
 		84559232240BD2280051B806 /* HRMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84559231240BD2280051B806 /* HRMViewController.swift */; };
 		846A10782406ED160080E47E /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846A10772406ED160080E47E /* OptionsViewController.swift */; };
 		846A107A2406FB220080E47E /* CadenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846A10792406FB220080E47E /* CadenceViewController.swift */; };
+		846B9FE3241CDA870091D854 /* OptionsValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846B9FE2241CDA870091D854 /* OptionsValues.swift */; };
 		84BDCE1123F4777800AE5546 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDCE1023F4777800AE5546 /* AppDelegate.swift */; };
 		84BDCE1323F4777800AE5546 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDCE1223F4777800AE5546 /* SceneDelegate.swift */; };
 		84BDCE1A23F4777800AE5546 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BDCE1823F4777800AE5546 /* Main.storyboard */; };
@@ -44,6 +46,7 @@
 		519BDB54574CB9921DA28974 /* libPods-RunTracker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RunTracker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E01277C240426A1004F70E0 /* RunTrackerModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RunTrackerModel.xcdatamodel; sourceTree = "<group>"; };
 		6E0127A224046C20004F70E0 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
+		8421178F242791360053AA2D /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		842B04412418E1F30062CC5F /* QuickTableViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QuickTableViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		842EE96623FA8F410046D3C1 /* TrainingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingViewController.swift; sourceTree = "<group>"; };
 		842EE96823FA8F760046D3C1 /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +59,7 @@
 		84559231240BD2280051B806 /* HRMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HRMViewController.swift; sourceTree = "<group>"; };
 		846A10772406ED160080E47E /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		846A10792406FB220080E47E /* CadenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadenceViewController.swift; sourceTree = "<group>"; };
+		846B9FE2241CDA870091D854 /* OptionsValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsValues.swift; sourceTree = "<group>"; };
 		84BDCE0D23F4777800AE5546 /* RunTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84BDCE1023F4777800AE5546 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84BDCE1223F4777800AE5546 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -114,6 +118,8 @@
 			children = (
 				844D87C02416A4970042EAEC /* MiBand2.swift */,
 				844D87C12416A4970042EAEC /* MiBand2Service.swift */,
+				846B9FE2241CDA870091D854 /* OptionsValues.swift */,
+				8421178F242791360053AA2D /* Colours.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -276,6 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				846B9FE3241CDA870091D854 /* OptionsValues.swift in Sources */,
 				846A107A2406FB220080E47E /* CadenceViewController.swift in Sources */,
 				842EE96923FA8F760046D3C1 /* HistoryTableViewController.swift in Sources */,
 				842EE96723FA8F410046D3C1 /* TrainingViewController.swift in Sources */,
@@ -288,6 +295,7 @@
 				6E0127A324046C20004F70E0 /* HistoryTableViewCell.swift in Sources */,
 				1A50BADB241BC0B1004A86B2 /* RegisterViewController.swift in Sources */,
 				6E01277D240426A1004F70E0 /* RunTrackerModel.xcdatamodeld in Sources */,
+				84211790242791360053AA2D /* Colours.swift in Sources */,
 				84BDCE1123F4777800AE5546 /* AppDelegate.swift in Sources */,
 				843D878424156EC100BE1612 /* OptionsConstants.swift in Sources */,
 				1AA0D6D4241418BE0044476C /* DetailViewController.swift in Sources */,

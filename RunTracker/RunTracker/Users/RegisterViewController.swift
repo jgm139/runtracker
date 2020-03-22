@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class RegisterViewController: UIViewController {
 
@@ -14,6 +15,8 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordUser: UITextField!
     @IBOutlet weak var repeatPasswordUser: UITextField!
     @IBOutlet weak var registerButton: UIButton!
+    
+    var register = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,4 +50,84 @@ class RegisterViewController: UIViewController {
         }
     }
 
+    func registerAction() {
+        guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let miContexto = miDelegate.persistentContainer.viewContext
+        
+        let request = NSFetchRequest<User>(entityName: "User")
+        let users = try? miContexto.fetch(request)
+        
+        var exist = false
+        
+        for data in users!{
+            if data.username == self.nameUser.text {
+                exist = true
+            }
+        }
+        
+        if exist == false {
+            if self.passwordUser.text == self.repeatPasswordUser.text {
+                let user = User(context: miContexto)
+                user.username = self.nameUser.text
+                user.password = self.passwordUser.text
+                user.image = UIImage(named: "profilePhoto")?.pngData()
+                do {
+                    try miContexto.save()
+                    self.register = true
+                    UserSingleton.userSingleton = user
+                } catch {
+                   print("Error al guardar el contexto: \(error)")
+                }
+            } else {
+                let alert = UIAlertController(title: "Error", message: "Las contraseñas no coinciden", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Cerrar", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                
+                self.register = false
+            }
+        } else {
+            let alert = UIAlertController(title: "Error", message: "El nombre de usuario ya existe", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Cerrar", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            
+            self.register = false
+        }
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool {
+        if let ident = identifier {
+            if ident == "register" {
+                self.registerAction()
+                if self.register == true {
+                    self.initSession()
+                    return true
+                }
+            }
+        }
+        return false
+    }
+        
+    func initSession(){
+        guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let miContexto = miDelegate.persistentContainer.viewContext
+        
+        let request : NSFetchRequest<Session> = NSFetchRequest(entityName:"Session")
+        let session = try? miContexto.fetch(request)
+        
+        if session!.count > 0 {
+            session![0].username = UserSingleton.userSingleton.username
+        } else {
+            let session = Session(context: miContexto)
+            session.username = UserSingleton.userSingleton.username
+        }
+        do {
+            try miContexto.save()
+        } catch {
+           print("Error al guardar el contexto: \(error)")
+        }
+    }
 }

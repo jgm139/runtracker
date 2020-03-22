@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
-    <device id="retina5_9" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5Mc-dN-i15">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -11,9 +11,9 @@
         <!--Entreno-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="TrainingViewController" customModule="RunTracker" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="tsR-hK-woN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                <viewController storyboardIdentifier="TrainingViewController" modalPresentationStyle="fullScreen" id="9pv-A4-QxB" customClass="TrainingViewController" customModule="RunTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" restorationIdentifier="TrainingViewController" id="tsR-hK-woN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Azo-Wn-E9g">
@@ -38,6 +38,17 @@
                                 <connections>
                                     <action selector="actionPlay:" destination="9pv-A4-QxB" eventType="touchUpInside" id="dHH-04-sC4"/>
                                 </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UNI-yd-6Nv" userLabel="Button Stop">
+                                <rect key="frame" x="252" y="744" width="50" height="48.666666666666629"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="mkM-K3-HUQ"/>
+                                    <constraint firstAttribute="height" constant="50" id="odC-fA-iss"/>
+                                </constraints>
+                                <color key="tintColor" red="0.80600307642487046" green="0.1160259082005487" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" backgroundImage="stop.circle.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                                </state>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="4z9-oc-lmz" userLabel="Stack Values">
                                 <rect key="frame" x="17.666666666666657" y="109.66666666666667" width="340" height="27.666666666666671"/>
@@ -112,15 +123,6 @@
                                 <rect key="frame" x="0.0" y="192.33333333333331" width="375" height="536.66666666666674"/>
                                 <color key="tintColor" red="0.0" green="0.56470588239999997" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UNI-yd-6Nv" userLabel="Button Stop">
-                                <rect key="frame" x="232.66666666666663" y="660" width="50" height="48.666666666666629"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="mkM-K3-HUQ"/>
-                                    <constraint firstAttribute="height" constant="50" id="odC-fA-iss"/>
-                                </constraints>
-                                <color key="tintColor" red="0.80600307642487046" green="0.1160259082005487" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" backgroundImage="stop.circle" catalog="system"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -145,6 +147,7 @@
                     <tabBarItem key="tabBarItem" title="Entreno" image="runner" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="buttonPlay" destination="p6p-4T-3YF" id="Hgd-u9-YBe"/>
+                        <outlet property="buttonStop" destination="UNI-yd-6Nv" id="IEv-mZ-TLL"/>
                         <outlet property="cadenceLabel" destination="GNm-pp-ltf" id="7Df-Yv-Iuf"/>
                         <outlet property="distanceLabel" destination="1jO-7h-aeV" id="zF5-BX-749"/>
                         <outlet property="mapView" destination="KJD-I9-Mlv" id="WfN-4N-JLm"/>
@@ -159,7 +162,7 @@
         <!--Historial-->
         <scene sceneID="jQv-4U-2sg">
             <objects>
-                <tableViewController id="9Za-4y-2sq" customClass="HistoryTableViewController" customModule="RunTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController modalPresentationStyle="fullScreen" id="9Za-4y-2sq" customClass="HistoryTableViewController" customModule="RunTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="TgQ-lm-TVu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -350,7 +353,7 @@
         <!--Perfil-->
         <scene sceneID="Nk3-8e-0hf">
             <objects>
-                <viewController id="pfE-TD-BpG" customClass="ProfileViewController" customModule="RunTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="pfE-TD-BpG" customClass="ProfileViewController" customModule="RunTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9nQ-9J-g5u">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -807,10 +810,10 @@
             </objects>
             <point key="canvasLocation" x="4346" y="1146"/>
         </scene>
-        <!--View Controller-->
+        <!--First View Controller-->
         <scene sceneID="thB-TT-KM3">
             <objects>
-                <viewController id="ynV-yu-rBu" sceneMemberID="viewController">
+                <viewController id="ynV-yu-rBu" customClass="FirstViewController" customModule="RunTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aCP-EF-GHs">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -867,6 +870,9 @@
                     <navigationItem key="navigationItem" id="lo9-i3-vAa">
                         <barButtonItem key="backBarButtonItem" title="Inicio" id="Pxf-gx-H5d"/>
                     </navigationItem>
+                    <connections>
+                        <segue destination="49e-Tb-3d3" kind="presentation" identifier="sessionInit" id="t4n-SC-yWl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AzO-w6-xZo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -875,7 +881,7 @@
         <!--Register View Controller-->
         <scene sceneID="ey5-n6-PCf">
             <objects>
-                <viewController id="XtP-gB-Dpq" customClass="RegisterViewController" customModule="RunTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="XtP-gB-Dpq" customClass="RegisterViewController" customModule="RunTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8Ck-3j-tPT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -933,6 +939,9 @@
                                 <rect key="frame" x="141.66666666666666" y="499" width="92" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Registrarse"/>
+                                <connections>
+                                    <segue destination="49e-Tb-3d3" kind="presentation" identifier="register" id="nYB-Gd-UAT"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -978,7 +987,7 @@
         <!--Login View Controller-->
         <scene sceneID="AbF-ch-Ah2">
             <objects>
-                <viewController id="48D-h6-xow" customClass="LoginViewController" customModule="RunTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="48D-h6-xow" customClass="LoginViewController" customModule="RunTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KoL-bm-fnm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1033,6 +1042,9 @@
                                 <rect key="frame" x="135" y="478.33333333333331" width="105" height="33.999999999999943"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Iniciar sesión"/>
+                                <connections>
+                                    <segue destination="49e-Tb-3d3" kind="presentation" identifier="login" id="CeX-d2-mZr"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -1062,7 +1074,7 @@
         <scene sceneID="yl2-sM-qoP">
             <objects>
                 <tabBarController modalPresentationStyle="fullScreen" id="49e-Tb-3d3" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
+                    <tabBar key="tabBar" contentMode="scaleToFill" restorationIdentifier="First" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1083,7 +1095,7 @@
         <!--Opciones-->
         <scene sceneID="pIo-cI-yzz">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jbO-9H-Msv" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="jbO-9H-Msv" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Opciones" image="gear" catalog="system" id="tbA-IK-9Bk"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="OI7-UL-fO1">
@@ -1134,5 +1146,8 @@
         <image name="stop.circle" catalog="system" width="64" height="60"/>
         <image name="waveform.path.ecg" catalog="system" width="64" height="62"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="t4n-SC-yWl"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

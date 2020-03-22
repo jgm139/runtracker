@@ -12,6 +12,7 @@ import AVFoundation
 class OptionsValues {
     
     // MARK: Attributes
+    public static let MAX_MINS_PAUSED: Int = 1
     private let defaults = UserDefaults.standard
     private var cadenceValues: (cadence: Int, useNotifications: Bool, idSound: SystemSoundID)
     private var intervalValues: (measure: String, measureValue: Int, useNotifications: Bool, idSound: SystemSoundID)?
@@ -22,7 +23,7 @@ class OptionsValues {
         // Cadence Values
         self.cadenceValues.cadence = Int(defaults.float(forKey: CadenceConstants.CADENCE_STEPS_PER_MIN.raw()))
         self.cadenceValues.useNotifications = defaults.bool(forKey: CadenceConstants.CADENCE_NOTIFICATIONS.raw())
-        self.cadenceValues.idSound = defaults.object(forKey: CadenceConstants.CADENCE_SOUND_NOTIFICATIONS.rawValue) as! SystemSoundID
+        self.cadenceValues.idSound = defaults.object(forKey: CadenceConstants.CADENCE_SOUND_NOTIFICATIONS.rawValue) as? SystemSoundID ?? 0000
         print("Cadence Values \(self.cadenceValues.idSound)")
         
         // Interval Values

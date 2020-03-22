@@ -16,11 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let charleston_green = UIColor.init(red: 46/255, green: 44/255, blue: 47/255, alpha: 1)
+        
         UISwitch.appearance().onTintColor = UIColor.orange
         UIButton.appearance().tintColor = UIColor.orange
         UISlider.appearance().tintColor = UIColor.yellow
-        UISlider.appearance().thumbTintColor = charleston_green
+        UISlider.appearance().thumbTintColor = UIColor.MyPalette.jet
         UITabBar.appearance().unselectedItemTintColor = UIColor.white
         return true
     }

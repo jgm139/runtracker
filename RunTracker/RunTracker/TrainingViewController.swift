@@ -57,7 +57,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         super.viewDidLoad()
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressPlay))
-        self.buttonPlay.tintColor = UIColor.init(red: 19/255, green: 142/255, blue: 83/255, alpha: 1)
+        self.buttonPlay.tintColor = UIColor.MyPalette.spanishGreen
         longPress.minimumPressDuration = 2
         self.buttonStop.addGestureRecognizer(longPress)
         self.buttonStop.addTarget(self, action: Selector(("startStopAnimation")), for: .touchDown)
@@ -180,7 +180,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         if self.isTimerRunning == true {
             timer.invalidate()
             self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle"), for: UIControl.State.normal)
-            self.buttonPlay.tintColor = UIColor.init(red: 19/255, green: 142/255, blue: 83/255, alpha: 1)
+            self.buttonPlay.tintColor = UIColor.MyPalette.spanishGreen
             self.buttonStop.isHidden = false
             self.isTimerRunning = false
             self.isPaused = true
@@ -247,8 +247,8 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
             saved = true
         }
         stopTimer()
-        self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle.fill"), for: UIControl.State.normal)
-        self.buttonPlay.tintColor = UIColor.init(red: 30/255, green: 160/255, blue: 0, alpha: 1)
+        self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle"), for: UIControl.State.normal)
+        self.buttonPlay.tintColor = UIColor.MyPalette.spanishGreen
         self.isTimerRunning = false
         self.startLocation = nil
         self.distanceTraveled = 0;

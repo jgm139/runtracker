@@ -66,6 +66,10 @@ final class OptionsViewController: QuickTableViewController {
             let resultViewController = storyBoard.instantiateViewController(withIdentifier: "HRMViewController") as! HRMViewController
             self?.navigationController?.pushViewController(resultViewController, animated: true) })
         ]),
+        
+        Section(title: "", rows: [
+          TapActionRow<CustomTapActionCell>(text: "Cerrar sesión", action: { [weak self] in self?.signOut($0) })
+        ]),
             
         ]
     }
@@ -103,4 +107,22 @@ final class OptionsViewController: QuickTableViewController {
         }
     }
     
+    private func signOut(_ sender: Row) {
+        // Aquí cerramos sesión
+    }
+    
+}
+
+final class CustomTapActionCell: TapActionCell {
+
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+    tintColor = .red
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+    tintColor = .red
+  }
+
 }

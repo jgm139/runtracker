@@ -120,6 +120,7 @@
 				844D87C12416A4970042EAEC /* MiBand2Service.swift */,
 				846B9FE2241CDA870091D854 /* OptionsValues.swift */,
 				8421178F242791360053AA2D /* Colours.swift */,
+				1AA382AE2424F2F4002E53E7 /* CustomPolyline.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -152,7 +153,6 @@
 				84C0C03823FC58AF0063FDF0 /* Options */,
 				842EE96A23FA8FD80046D3C1 /* ProfileViewController.swift */,
 				842EE96623FA8F410046D3C1 /* TrainingViewController.swift */,
-				1AA382AE2424F2F4002E53E7 /* CustomPolyline.swift */,
 				1A50BAD7241BC05E004A86B2 /* Users */,
 				6E0127A124046B4F004F70E0 /* History */,
 				84BDCE1B23F4777B00AE5546 /* Assets.xcassets */,

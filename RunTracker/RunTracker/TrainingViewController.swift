@@ -56,9 +56,11 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressPlay))
-        self.buttonPlay.tintColor = UIColor.MyPalette.spanishGreen
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressStop))
         longPress.minimumPressDuration = 2
+        
+        self.buttonPlay.tintColor = UIColor.MyPalette.spanishGreen
+        
         self.buttonStop.addGestureRecognizer(longPress)
         self.buttonStop.addTarget(self, action: Selector(("startStopAnimation")), for: .touchDown)
         self.buttonStop.addTarget(self, action: Selector(("pauseStopAnimation")), for: .touchUpInside)
@@ -88,13 +90,13 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     // MARK: - Location Manager Delegate
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
-        case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
-            mapView.showsUserLocation = true
-            
-        default:
-            locationManager.stopUpdatingLocation()
-            mapView.showsUserLocation = false
+            case .authorizedAlways, .authorizedWhenInUse:
+                locationManager.startUpdatingLocation()
+                mapView.showsUserLocation = true
+                
+            default:
+                locationManager.stopUpdatingLocation()
+                mapView.showsUserLocation = false
         }
     }
     
@@ -241,17 +243,21 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         self.playStop = false
     }
     
-    @objc func longPressPlay(){
+    @objc func longPressStop(){
         if saved == false {
             saveCoreData()
             saved = true
         }
         stopTimer()
+        resetTraining()
+    }
+    
+    func resetTraining() {
         self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle"), for: UIControl.State.normal)
         self.buttonPlay.tintColor = UIColor.MyPalette.spanishGreen
         self.isTimerRunning = false
         self.startLocation = nil
-        self.distanceTraveled = 0;
+        self.distanceTraveled = 0
         self.distanceLabel.text = "0,000"
         self.timeLabel.text = "00:00:00"
         self.rateLabel.text = "0,0"
@@ -282,7 +288,13 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
             // Notificar tiempo
             self.notifyIntervals()
             let km = Double(floor(self.distanceTraveled)/1000)
-            self.rate = Double(min/km)
+            self.rate = km > 0 ? Double(min/km) : 0
+            
+            if self.rate <= 0 {
+                self.seconds_paused += 1
+                self.checkAutopause()
+            }
+            
             self.rateLabel.text = NSString.localizedStringWithFormat("%.1f", self.rate) as String
         }
     }
@@ -340,6 +352,18 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         }
     }
     
+    func checkAutopause() {
+        if let autopause = optionsValues?.getAutopauseValue() {
+            if autopause {
+                if Int(seconds_paused/60) >= OptionsValues.MAX_MINS_PAUSED {
+                    stopTimer()
+                    self.seconds_paused = 0
+                    resetTraining()
+                }
+            }
+        }
+    }
+    
     func playNotificationSound(useNotifications: Bool?, sound: SystemSoundID?) {
         if let u = useNotifications {
             if u {
@@ -368,6 +392,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
                 break
         }
     }
+    
     
     // MARK: - Core Data
     func saveCoreData(){

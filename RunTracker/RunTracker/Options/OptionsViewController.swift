@@ -8,6 +8,7 @@
 
 import Foundation
 import QuickTableViewController
+import CoreData
 
 final class OptionsViewController: QuickTableViewController {
     
@@ -108,7 +109,37 @@ final class OptionsViewController: QuickTableViewController {
     }
     
     private func signOut(_ sender: Row) {
-        // Aquí cerramos sesión
+        let alert = UIAlertController(title: "¿Cerrar Sesión?", message: "¿Está seguro de que desea continuar con esta acción?",         preferredStyle: UIAlertController.Style.alert)
+
+        alert.addAction(UIAlertAction(title: "Cancelar", style: UIAlertAction.Style.default, handler: { _ in
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Cerrar sesión", style: UIAlertAction.Style.destructive, handler: {(_: UIAlertAction!) in
+            self.signOutAction()
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func signOutAction() {
+        guard let miDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let miContexto = miDelegate.persistentContainer.viewContext
+        
+        let request : NSFetchRequest<Session> = NSFetchRequest(entityName:"Session")
+        let session = try? miContexto.fetch(request)
+        
+        if session!.count > 0 {
+            miContexto.delete(session![0])
+        }
+        do {
+            try miContexto.save()
+            let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "First") as! UINavigationController
+            viewController.modalPresentationStyle = .fullScreen
+            self.present(viewController, animated: true, completion: nil)
+        } catch {
+           print("Error al guardar el contexto: \(error)")
+        }
     }
     
 }

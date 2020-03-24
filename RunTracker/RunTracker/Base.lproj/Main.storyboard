@@ -936,7 +936,7 @@
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="222" id="B5n-0V-uMN"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" textContentType="password"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Repetir contraseña" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T61-72-kp0">
                                         <rect key="frame" x="0.0" y="71.666666666666686" width="222" height="34"/>
@@ -945,7 +945,7 @@
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="222" id="649-kP-KDw"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" textContentType="new-password"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="new-password"/>
                                     </textField>
                                 </subviews>
                             </stackView>
@@ -984,7 +984,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Jai-es-Tmx">
             <objects>
-                <navigationController id="5Mc-dN-i15" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="First" id="5Mc-dN-i15" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3bJ-hi-oHC">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1045,7 +1045,7 @@
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="222" id="RNd-4c-KQC"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" textContentType="password"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                         <connections>
                                             <action selector="passwordUser:" destination="Ut7-XJ-Lif" eventType="editingDidEnd" id="wGe-aI-x8P"/>
                                         </connections>

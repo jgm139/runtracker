@@ -46,6 +46,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     fileprivate let locationManager: CLLocationManager = {
         let manager = CLLocationManager()
         manager.requestWhenInUseAuthorization()
+        manager.requestAlwaysAuthorization()
         return manager
     }()
     private var locationsHistory: [CLLocation] = []
@@ -91,12 +92,12 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
             case .authorizedAlways, .authorizedWhenInUse:
-                locationManager.startUpdatingLocation()
-                mapView.showsUserLocation = true
+                self.locationManager.startUpdatingLocation()
+                self.mapView.showsUserLocation = true
                 
             default:
-                locationManager.stopUpdatingLocation()
-                mapView.showsUserLocation = false
+                self.locationManager.stopUpdatingLocation()
+                self.mapView.showsUserLocation = false
         }
     }
     
@@ -179,6 +180,10 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     
     // MARK: - Actions
     @IBAction func actionPlay(_ sender: Any) {
+        
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.requestAlwaysAuthorization()
+        
         if self.isTimerRunning == true {
             timer.invalidate()
             self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle"), for: UIControl.State.normal)

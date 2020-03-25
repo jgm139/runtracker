@@ -72,6 +72,10 @@ class CadenceViewController: UIViewController {
         
         let index: Int = defaults.integer(forKey: CadenceConstants.CADENCE_INDEX_SOUNDS.raw())
         pickerView.selectRow(index, inComponent: 0, animated: true)
+        
+        if defaults.float(forKey: CadenceConstants.CADENCE_STEPS_PER_MIN.raw()) <= 0.0 {
+            defaults.set(slider.value, forKey: CadenceConstants.CADENCE_STEPS_PER_MIN.raw())
+        }
     }
     
 }

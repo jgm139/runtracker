@@ -35,13 +35,18 @@ class IntervalViewController: UIViewController {
         
         measure = defaults.string(forKey: IntervalConstants.INTERVAL_MEASURE.raw())
         
-        if measure == "TIME" {
+        if measure == nil {
+            defaults.set("TIME", forKey: IntervalConstants.INTERVAL_MEASURE.raw())
+            measure = "TIME"
+        }
+        
+        /*if measure == "TIME" {
             slider.maximumValue = 60
             labelUnit.text = "min"
-        } else {
+        } else if measure == "DISTANCE" {
             slider.maximumValue = 1000
             labelUnit.text = "m"
-        }
+        }*/
         
         let notificationsOn: Bool = defaults.bool(forKey: IntervalConstants.INTERVAL_NOTIFICATIONS.raw())
         switchNotifications.setOn(notificationsOn, animated: true)
@@ -56,9 +61,13 @@ class IntervalViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         if measure == "TIME" {
             segmentedControl.selectedSegmentIndex = 0;
+            slider.maximumValue = 60
+            labelUnit.text = "min"
             slider.value = defaults.float(forKey: IntervalConstants.INTERVAL_TIME.raw())
         } else {
             segmentedControl.selectedSegmentIndex = 1;
+            slider.maximumValue = 1000
+            labelUnit.text = "m"
             slider.value = defaults.float(forKey: IntervalConstants.INTERVAL_DISTANCE.raw())
         }
         
@@ -70,6 +79,7 @@ class IntervalViewController: UIViewController {
         labelValue.text = "\(Int(slider.value))"
         
         if measure == "TIME" {
+            print(slider.value)
             defaults.set(slider.value, forKey: IntervalConstants.INTERVAL_TIME.raw())
         } else {
             defaults.set(slider.value, forKey: IntervalConstants.INTERVAL_DISTANCE.raw())
@@ -81,6 +91,17 @@ class IntervalViewController: UIViewController {
             case 0:
                 defaults.set("TIME", forKey: IntervalConstants.INTERVAL_MEASURE.raw())
                 slider.value = defaults.float(forKey: IntervalConstants.INTERVAL_TIME.raw())
+                
+                if slider.value <= 0 {
+                    turnOffNotifications()
+                    defaults.set(false, forKey: IntervalConstants.INTERVAL_NOTIFICATIONS.raw())
+                    self.switchNotifications.isOn = false
+                } else {
+                    turnOnNotifications()
+                    defaults.set(true, forKey: IntervalConstants.INTERVAL_NOTIFICATIONS.raw())
+                    self.switchNotifications.isOn = true
+                }
+                
                 labelValue.text = "\(Int(slider.value))"
                 slider.maximumValue = 60
                 labelUnit.text = "min"
@@ -88,9 +109,21 @@ class IntervalViewController: UIViewController {
             case 1:
                 defaults.set("DISTANCE", forKey: IntervalConstants.INTERVAL_MEASURE.raw())
                 slider.value = defaults.float(forKey: IntervalConstants.INTERVAL_DISTANCE.raw())
+                
+                if slider.value <= 0 {
+                    turnOffNotifications()
+                    defaults.set(false, forKey: IntervalConstants.INTERVAL_NOTIFICATIONS.raw())
+                    self.switchNotifications.isOn = false
+                } else {
+                    turnOnNotifications()
+                    defaults.set(true, forKey: IntervalConstants.INTERVAL_NOTIFICATIONS.raw())
+                    self.switchNotifications.isOn = true
+                }
+                
                 labelValue.text = "\(Int(slider.value))"
                 slider.maximumValue = 1000
                 labelUnit.text = "m"
+                break
             default:
                 break
         }

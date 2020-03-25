@@ -62,6 +62,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         longPress.minimumPressDuration = 2
         
         self.buttonPlay.tintColor = UIColor.MyPalette.spanishGreen
+        self.buttonStop.tintColor = UIColor.red
         
         self.buttonStop.addGestureRecognizer(longPress)
         self.buttonStop.addTarget(self, action: Selector(("startStopAnimation")), for: .touchDown)

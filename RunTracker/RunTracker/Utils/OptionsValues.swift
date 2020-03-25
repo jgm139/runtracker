@@ -24,7 +24,7 @@ class OptionsValues {
         self.cadenceValues.cadence = Int(defaults.float(forKey: CadenceConstants.CADENCE_STEPS_PER_MIN.raw()))
         self.cadenceValues.useNotifications = defaults.bool(forKey: CadenceConstants.CADENCE_NOTIFICATIONS.raw())
         self.cadenceValues.idSound = defaults.object(forKey: CadenceConstants.CADENCE_SOUND_NOTIFICATIONS.rawValue) as? SystemSoundID ?? 0000
-        print("Cadence Values \(self.cadenceValues.idSound)")
+        //print("Cadence Values \(self.cadenceValues.idSound)")
         
         // Interval Values
         self.intervalValues = (measure: "", measureValue: 0, useNotifications: false, idSound: 0000)

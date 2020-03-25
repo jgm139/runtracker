@@ -21,7 +21,7 @@ class HistoryTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        listHistory = UserSingleton.userSingleton.histories?.allObjects as? [History]
+        listHistory = UserSingleton.userSingleton.user.histories?.allObjects as? [History]
         listHistory.sort(by: {$0.date!.timeIntervalSinceNow > $1.date!.timeIntervalSinceNow})
         tableView.reloadData()
     }

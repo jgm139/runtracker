@@ -23,6 +23,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     @IBOutlet weak var rateLabel: UILabel!
     @IBOutlet weak var cadenceLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var hrmLabel: UILabel!
     
     // MARK: - Variables
     var timer = Timer()
@@ -180,7 +181,6 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     
     // MARK: - Actions
     @IBAction func actionPlay(_ sender: Any) {
-        
         if self.isTimerRunning == true {
             timer.invalidate()
             self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle"), for: UIControl.State.normal)
@@ -422,8 +422,8 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
             
             location.history = history
             history.addToLocations(location)
-            history.user = UserSingleton.userSingleton
-            UserSingleton.userSingleton.addToHistories(history)
+            history.user = UserSingleton.userSingleton.user
+            UserSingleton.userSingleton.user.addToHistories(history)
         }
         do {
            try miContexto.save()

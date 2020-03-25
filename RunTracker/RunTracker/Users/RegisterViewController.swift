@@ -76,7 +76,7 @@ class RegisterViewController: UIViewController {
                 do {
                     try miContexto.save()
                     self.register = true
-                    UserSingleton.userSingleton = user
+                    UserSingleton.userSingleton.user = user
                 } catch {
                    print("Error al guardar el contexto: \(error)")
                 }
@@ -119,10 +119,10 @@ class RegisterViewController: UIViewController {
         let session = try? miContexto.fetch(request)
         
         if session!.count > 0 {
-            session![0].username = UserSingleton.userSingleton.username
+            session![0].username = UserSingleton.userSingleton.user.username
         } else {
             let session = Session(context: miContexto)
-            session.username = UserSingleton.userSingleton.username
+            session.username = UserSingleton.userSingleton.user.username
         }
         do {
             try miContexto.save()

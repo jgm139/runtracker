@@ -181,10 +181,6 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     
     // MARK: - Actions
     @IBAction func actionPlay(_ sender: Any) {
-        
-        self.locationManager.requestWhenInUseAuthorization()
-        self.locationManager.requestAlwaysAuthorization()
-        
         if self.isTimerRunning == true {
             timer.invalidate()
             self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle"), for: UIControl.State.normal)

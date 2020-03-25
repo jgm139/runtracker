@@ -34,18 +34,18 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     
     // MARK: - Methods
     func loadData() {
-        self.name.text = UserSingleton.userSingleton.name
-        self.weight.text = UserSingleton.userSingleton.weight
-        self.age.text = UserSingleton.userSingleton.age
-        self.height.text = UserSingleton.userSingleton.height
+        self.name.text = UserSingleton.userSingleton.user.name
+        self.weight.text = UserSingleton.userSingleton.user.weight
+        self.age.text = UserSingleton.userSingleton.user.age
+        self.height.text = UserSingleton.userSingleton.user.height
         
-        if UserSingleton.userSingleton.sex == "men" {
+        if UserSingleton.userSingleton.user.sex == "men" {
             sexImage.image = UIImage(named: "men")
         } else {
             sexImage.image = UIImage(named: "women")
         }
         
-        self.imageProfile.image = UIImage(data: UserSingleton.userSingleton.image!)
+        self.imageProfile.image = UIImage(data: UserSingleton.userSingleton.user.image!)
         self.imageProfile.contentMode = .scaleAspectFill
     }
     
@@ -60,7 +60,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
             let users = try miContexto.fetch(request)
             
             for user in users {
-                if user == UserSingleton.userSingleton {
+                if user == UserSingleton.userSingleton.user {
                     user.name = self.name.text
                     user.weight = self.weight.text
                     user.age = self.age.text
@@ -73,7 +73,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
                     }
                     user.image = self.imageProfile.image?.pngData()
                     
-                    UserSingleton.userSingleton = user
+                    UserSingleton.userSingleton.user = user
                 }
             }
         } catch {

@@ -9,7 +9,9 @@
 import Foundation
 
 class UserSingleton {
-    static var userSingleton = User()
+    var user: User!
 
     private init() { }
+    
+    static var userSingleton = UserSingleton()
 }

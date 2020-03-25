@@ -58,7 +58,7 @@ class LoginViewController: UIViewController {
         
         for data in users!{
             if data.username == self.nameUser.text {
-                UserSingleton.userSingleton = data
+                UserSingleton.userSingleton.user = data
                 password = data.password!
                 exist = true
             }
@@ -97,10 +97,10 @@ class LoginViewController: UIViewController {
         let session = try? miContexto.fetch(request)
         
         if session!.count > 0 {
-            session![0].username = UserSingleton.userSingleton.username
+            session![0].username = UserSingleton.userSingleton.user.username
         } else {
             let session = Session(context: miContexto)
-            session.username = UserSingleton.userSingleton.username
+            session.username = UserSingleton.userSingleton.user.username
         }
         do {
             try miContexto.save()

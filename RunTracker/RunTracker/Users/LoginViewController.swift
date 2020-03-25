@@ -66,7 +66,7 @@ class LoginViewController: UIViewController {
         
         if exist == false || self.passwordUser.text != password {
             let alert = UIAlertController(title: "Error", message: "Combinación incorrecta", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Cerrar", style: UIAlertAction.Style.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Cerrar", style: UIAlertAction.Style.destructive, handler: nil))
             self.present(alert, animated: true, completion: nil)
             self.login = false
         } else if self.passwordUser.text == password {

@@ -82,14 +82,14 @@ class RegisterViewController: UIViewController {
                 }
             } else {
                 let alert = UIAlertController(title: "Error", message: "Las contraseñas no coinciden", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "Cerrar", style: UIAlertAction.Style.default, handler: nil))
+                alert.addAction(UIAlertAction(title: "Cerrar", style: UIAlertAction.Style.destructive, handler: nil))
                 self.present(alert, animated: true, completion: nil)
                 
                 self.register = false
             }
         } else {
             let alert = UIAlertController(title: "Error", message: "El nombre de usuario ya existe", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Cerrar", style: UIAlertAction.Style.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Cerrar", style: UIAlertAction.Style.destructive, handler: nil))
             self.present(alert, animated: true, completion: nil)
             
             self.register = false

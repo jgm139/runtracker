@@ -278,6 +278,8 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     func stopTimer() {
         timer.invalidate()
         self.seconds = 0
+        self.seconds_paused = 0
+        self.seconds_acumulated = 0
         self.timeLabel.text = self.timeString(time: TimeInterval(self.seconds)) //Actualizamos el label.
     }
     
@@ -358,9 +360,14 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         if let autopause = optionsValues?.getAutopauseValue() {
             if autopause {
                 if Int(seconds_paused/60) >= OptionsValues.MAX_MINS_PAUSED {
-                    stopTimer()
                     self.seconds_paused = 0
-                    resetTraining()
+                    
+                    timer.invalidate()
+                    self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle"), for: UIControl.State.normal)
+                    self.buttonPlay.tintColor = UIColor.MyPalette.spanishGreen
+                    self.buttonStop.isHidden = false
+                    self.isTimerRunning = false
+                    self.isPaused = true
                 }
             }
         }

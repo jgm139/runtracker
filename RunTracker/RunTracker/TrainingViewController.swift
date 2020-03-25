@@ -44,9 +44,12 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     var playStop = true
     
     // MARK: - Location Variables
-    fileprivate let locationManager: CLLocationManager = {
+    private lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
-        manager.requestWhenInUseAuthorization()
+        manager.delegate = self
+        manager.showsBackgroundLocationIndicator = true
+        manager.allowsBackgroundLocationUpdates = true
+        manager.pausesLocationUpdatesAutomatically = false
         manager.requestAlwaysAuthorization()
         return manager
     }()
@@ -62,6 +65,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         longPress.minimumPressDuration = 2
         
         self.buttonPlay.tintColor = UIColor.MyPalette.spanishGreen
+        self.buttonStop.tintColor = UIColor.red
         
         self.buttonStop.addGestureRecognizer(longPress)
         self.buttonStop.addTarget(self, action: Selector(("startStopAnimation")), for: .touchDown)
@@ -78,10 +82,6 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         self.mapView.showsCompass = true
         self.mapView.showsScale = true
         self.mapView.userTrackingMode = .follow
-        
-        self.locationManager.delegate = self
-        self.locationManager.showsBackgroundLocationIndicator = true
-        self.locationManager.allowsBackgroundLocationUpdates = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -337,7 +337,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
                 }
             } else if measure == "DISTANCE" {
                 if let distanceValue = optionsValues?.getIntervalValues()?.measureValue {
-                    if distanceValue == Int(distance_acumulated) {
+                    if distanceValue <= Int(distance_acumulated) {
                         distance_acumulated = 0
                         playNotificationSound(useNotifications: optionsValues?.getIntervalValues()?.useNotifications, sound: optionsValues?.getIntervalValues()?.idSound)
                     }

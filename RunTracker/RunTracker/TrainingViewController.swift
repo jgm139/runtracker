@@ -58,8 +58,12 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     var miBand: MiBand2!
     
     // MARK: - Location Variables
-    fileprivate let locationManager: CLLocationManager = {
+    private lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
+        manager.delegate = self
+        manager.showsBackgroundLocationIndicator = true
+        manager.allowsBackgroundLocationUpdates = true
+        manager.pausesLocationUpdatesAutomatically = false
         manager.requestWhenInUseAuthorization()
         manager.requestAlwaysAuthorization()
         return manager
@@ -95,11 +99,6 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         self.mapView.showsCompass = true
         self.mapView.showsScale = true
         self.mapView.userTrackingMode = .follow
-        
-        self.locationManager.delegate = self
-        self.locationManager.showsBackgroundLocationIndicator = true
-        self.locationManager.allowsBackgroundLocationUpdates = true
-        
         self.centralManager = CBCentralManager()
         self.centralManager.delegate = self
     }
@@ -169,7 +168,10 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error.localizedDescription)
+        let alertController = UIAlertController(title: "Error en al obtener la localización", message: error.localizedDescription , preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Cerrar", style: .destructive, handler: { action in })
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
     }
     
     // MARK: - Map View Delegate
@@ -361,7 +363,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
                 }
             } else if measure == "DISTANCE" {
                 if let distanceValue = optionsValues?.getIntervalValues()?.measureValue {
-                    if distanceValue == Int(distance_acumulated) {
+                    if distanceValue <= Int(distance_acumulated) {
                         distance_acumulated = 0
                         playNotificationSound(useNotifications: optionsValues?.getIntervalValues()?.useNotifications, sound: optionsValues?.getIntervalValues()?.idSound)
                     }

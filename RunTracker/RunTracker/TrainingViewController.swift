@@ -50,6 +50,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         manager.showsBackgroundLocationIndicator = true
         manager.allowsBackgroundLocationUpdates = true
         manager.pausesLocationUpdatesAutomatically = false
+        manager.requestWhenInUseAuthorization()
         manager.requestAlwaysAuthorization()
         return manager
     }()
@@ -149,7 +150,10 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error.localizedDescription)
+        let alertController = UIAlertController(title: "Error en al obtener la localización", message: error.localizedDescription , preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Cerrar", style: .destructive, handler: { action in })
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
     }
     
     // MARK: - Map View Delegate

@@ -12,8 +12,9 @@ import MapKit
 import CoreLocation
 import CoreMotion
 import CoreData
+import CoreBluetooth
 
-class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     // MARK: - Outlets
     @IBOutlet weak var buttonPlay: UIButton!
@@ -23,25 +24,38 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     @IBOutlet weak var rateLabel: UILabel!
     @IBOutlet weak var cadenceLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var stackHRM: UIStackView!
     @IBOutlet weak var hrmLabel: UILabel!
+    @IBOutlet weak var hrmIcon: UIImageView!
     
     // MARK: - Variables
+    // Time
     var timer = Timer()
     var seconds = 0
     var seconds_acumulated = 0
     var seconds_paused = 0
     var isTimerRunning = false
+    
+    // Location
     var startLocation: CLLocation!
     var distanceTraveled: Double = 0
     var distance_acumulated: Double = 0
+    
+    // Activity Pedometer
     var pedometer = CMPedometer()
     var activityManager = CMMotionActivityManager()
     var steps = 0
     var rate: Double = 0
+    
+    // Others
     var saved = false
     var isPaused = false
     var optionsValues: OptionsValues?
     var playStop = true
+    
+    // Bluetooth
+    var centralManager: CBCentralManager!
+    var miBand: MiBand2!
     
     // MARK: - Location Variables
     fileprivate let locationManager: CLLocationManager = {
@@ -69,10 +83,12 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         self.buttonStop.addTarget(self, action: Selector(("pauseStopAnimation")), for: .touchUpInside)
         
         self.view.addSubview(self.mapView)
-        self.view.addSubview(self.buttonPlay)
-        self.view.addSubview(self.buttonStop)
         self.view.insertSubview(self.buttonPlay, aboveSubview: self.mapView)
         self.view.insertSubview(self.buttonStop, aboveSubview: self.mapView)
+        
+        self.stackHRM.addSubview(self.hrmIcon)
+        self.stackHRM.addSubview(self.hrmLabel)
+        self.view.insertSubview(self.stackHRM, aboveSubview: self.mapView)
         
         self.mapView.delegate = self
         self.mapView.showsUserLocation = true
@@ -83,6 +99,9 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         self.locationManager.delegate = self
         self.locationManager.showsBackgroundLocationIndicator = true
         self.locationManager.allowsBackgroundLocationUpdates = true
+        
+        self.centralManager = CBCentralManager()
+        self.centralManager.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -184,6 +203,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     @IBAction func actionPlay(_ sender: Any) {
         if self.isTimerRunning == true {
             timer.invalidate()
+            self.stopHeartBeatAnimation()
             self.buttonPlay.setBackgroundImage(UIImage(systemName:"play.circle"), for: UIControl.State.normal)
             self.buttonPlay.tintColor = UIColor.MyPalette.spanishGreen
             self.buttonStop.isHidden = false
@@ -191,6 +211,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
             self.isPaused = true
         } else {
             runTimer()
+            self.listenHRM()
             self.buttonPlay.setBackgroundImage(UIImage(systemName:"pause.circle"), for: UIControl.State.normal)
             self.buttonPlay.tintColor = UIColor.orange
             self.buttonStop.isHidden = true
@@ -403,6 +424,40 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         }
     }
     
+    // MARK: Bluetooth methods to update views
+    
+    func listenHRM() {
+        self.miBand.measureHeartRate()
+        self.startHeartBeatAnimation()
+    }
+    
+    func updateHeartRate(_ heartRate: Int) {
+        self.stopHeartBeatAnimation()
+        self.miBand.startVibrate()
+        self.hrmLabel.text = heartRate.description
+    }
+    
+    func startHeartBeatAnimation(){
+        let pulse1 = CASpringAnimation(keyPath: "transform.scale")
+        pulse1.duration = 0.6
+        pulse1.fromValue = 1.0
+        pulse1.toValue = 1.12
+        pulse1.autoreverses = true
+        pulse1.repeatCount = 1
+        pulse1.initialVelocity = 0.5
+        pulse1.damping = 0.8
+        
+        let animationGroup = CAAnimationGroup()
+        animationGroup.duration = 1.5
+        animationGroup.repeatCount = 1000
+        animationGroup.animations = [pulse1]
+        
+        self.hrmIcon.layer.add(animationGroup, forKey: "pulse")
+    }
+    
+    func stopHeartBeatAnimation(){
+        self.hrmIcon.layer.removeAllAnimations()
+    }
     
     // MARK: - Core Data
     func saveCoreData(){
@@ -437,6 +492,79 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
            try miContexto.save()
         } catch {
            print("Error al guardar el contexto: \(error)")
+        }
+    }
+    
+    // MARK: - Central Manager Delegate
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        switch central.state {
+            case .poweredOn:
+                let lastPeripherals = centralManager.retrieveConnectedPeripherals(withServices: [MiBand2Service.UUID_SERVICE_MIBAND2_SERVICE])
+                
+                if lastPeripherals.count > 0 {
+                    let device = lastPeripherals.first! as CBPeripheral
+                    miBand = MiBand2(device)
+                    centralManager.connect(miBand.peripheral, options: nil)
+                } else {
+                    centralManager.scanForPeripherals(withServices: nil, options: nil)
+                }
+                
+            default:
+                break
+        }
+    }
+    
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        
+        if peripheral.name == "MI Band 2" {
+            miBand = MiBand2(peripheral)
+            print("Trying to connect to \(String(describing: peripheral.name))")
+            centralManager.connect(miBand.peripheral, options: nil)
+        } else {
+            print("Discovered: \(String(describing: peripheral.name))")
+        }
+    }
+    
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        miBand.peripheral.delegate = self
+        miBand.peripheral.discoverServices(nil)
+    }
+    
+    // MARK: - Peripheral Delegate
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        if let servicePeripherals = peripheral.services {
+            for servicePeripheral in servicePeripherals {
+                peripheral.discoverCharacteristics(nil, for: servicePeripheral)
+            }
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        if let characteristics = service.characteristics {
+            for cc in characteristics {
+                switch cc.uuid.uuidString {
+                    case MiBand2Service.UUID_CHARACTERISTIC_6_BATTERY_INFO.uuidString:
+                        peripheral.readValue(for: cc)
+                        break
+                    case MiBand2Service.UUID_CHARACTERISTIC_HEART_RATE_DATA.uuidString:
+                        peripheral.setNotifyValue(true, for: cc)
+                        break
+                    default:
+                        print("Service: " + service.uuid.uuidString + " Characteristic: " + cc.uuid.uuidString)
+                        break
+                }
+            }
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        switch characteristic.uuid.uuidString{
+            case MiBand2Service.UUID_CHARACTERISTIC_HEART_RATE_DATA.uuidString:
+                updateHeartRate(miBand.getHeartRate(heartRateData: characteristic.value!))
+                break
+            default:
+                print(characteristic.uuid.uuidString)
+                break
         }
     }
     

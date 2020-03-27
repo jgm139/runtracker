@@ -99,6 +99,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         self.mapView.showsCompass = true
         self.mapView.showsScale = true
         self.mapView.userTrackingMode = .follow
+        
         self.centralManager = CBCentralManager()
         self.centralManager.delegate = self
     }
@@ -427,10 +428,11 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     }
     
     // MARK: Bluetooth methods to update views
-    
     func listenHRM() {
-        self.miBand.measureHeartRate()
-        self.startHeartBeatAnimation()
+        if self.miBand != nil {
+            self.miBand.measureHeartRate()
+            self.startHeartBeatAnimation()
+        }
     }
     
     func updateHeartRate(_ heartRate: Int) {
@@ -501,14 +503,14 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
             case .poweredOn:
-                let lastPeripherals = centralManager.retrieveConnectedPeripherals(withServices: [MiBand2Service.UUID_SERVICE_MIBAND2_SERVICE])
+                let lastPeripherals = self.centralManager.retrieveConnectedPeripherals(withServices: [MiBand2Service.UUID_SERVICE_MIBAND2_SERVICE])
                 
                 if lastPeripherals.count > 0 {
                     let device = lastPeripherals.first! as CBPeripheral
-                    miBand = MiBand2(device)
-                    centralManager.connect(miBand.peripheral, options: nil)
+                    self.miBand = MiBand2(device)
+                    self.centralManager.connect(self.miBand.peripheral, options: nil)
                 } else {
-                    centralManager.scanForPeripherals(withServices: nil, options: nil)
+                    self.centralManager.scanForPeripherals(withServices: nil, options: nil)
                 }
                 
             default:
@@ -519,17 +521,17 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
         if peripheral.name == "MI Band 2" {
-            miBand = MiBand2(peripheral)
+            self.miBand = MiBand2(peripheral)
             print("Trying to connect to \(String(describing: peripheral.name))")
-            centralManager.connect(miBand.peripheral, options: nil)
+            self.centralManager.connect(self.miBand.peripheral, options: nil)
         } else {
             print("Discovered: \(String(describing: peripheral.name))")
         }
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        miBand.peripheral.delegate = self
-        miBand.peripheral.discoverServices(nil)
+        self.miBand.peripheral.delegate = self
+        self.miBand.peripheral.discoverServices(nil)
     }
     
     // MARK: - Peripheral Delegate
@@ -562,7 +564,7 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         switch characteristic.uuid.uuidString{
             case MiBand2Service.UUID_CHARACTERISTIC_HEART_RATE_DATA.uuidString:
-                updateHeartRate(miBand.getHeartRate(heartRateData: characteristic.value!))
+                self.updateHeartRate(self.miBand.getHeartRate(heartRateData: characteristic.value!))
                 break
             default:
                 print(characteristic.uuid.uuidString)

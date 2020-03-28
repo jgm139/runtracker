@@ -58,7 +58,16 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
     var miBand: MiBand2!
     
     // MARK: - Location Variables
-    private var locationManager = CLLocationManager()
+    private lazy var locationManager: CLLocationManager = {
+        let manager = CLLocationManager()
+        manager.delegate = self
+        manager.showsBackgroundLocationIndicator = true
+        manager.allowsBackgroundLocationUpdates = true
+        manager.pausesLocationUpdatesAutomatically = false
+        manager.requestWhenInUseAuthorization()
+        manager.requestAlwaysAuthorization()
+        return manager
+    }()
     private var locationsHistory: [CLLocation] = []
     private var locationsIsPaused: [Bool] = []
     private var locationsDate: [Date] = []
@@ -93,12 +102,6 @@ class TrainingViewController: UIViewController, CLLocationManagerDelegate, MKMap
         
         self.centralManager = CBCentralManager()
         self.centralManager.delegate = self
-        
-        self.locationManager.delegate = self
-        self.locationManager.requestAlwaysAuthorization()
-        self.locationManager.showsBackgroundLocationIndicator = true
-        self.locationManager.allowsBackgroundLocationUpdates = true
-        self.locationManager.pausesLocationUpdatesAutomatically = false
     }
     
     override func viewWillAppear(_ animated: Bool) {

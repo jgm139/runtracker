@@ -10,7 +10,15 @@ import UIKit
 import AVFoundation
 
 class GestorPicker: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
-    let listSounds: [(name: String, soundID: SystemSoundID)] = [("Fanfare", 1025), ("Choo Choo", 1323), ("Calyso", 1322), ("SIMToolkitPositiveACK", 1054), ("VCRinging", 1154)]
+    
+    // MARK: Properties
+    let listSounds: [(name: String, soundID: SystemSoundID)] = [("---", 0000), ("Fanfare", 1025), ("Choo Choo", 1323), ("Calyso", 1322), ("SIMToolkitPositiveACK", 1054), ("VCRinging", 1154)]
+    var fromVC: String
+    let defaults = UserDefaults.standard
+    
+    init(from viewController: String) {
+        fromVC = viewController
+    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -25,9 +33,22 @@ class GestorPicker: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        // Aquí se guardaría en las UserDefaults el sonido escogido como notificación
-        print("Fila seleccionada: \(row), dato: \(listSounds[row])")
-        AudioServicesPlaySystemSound (listSounds[row].soundID)
+        if row > 0 {
+            AudioServicesPlaySystemSound (listSounds[row].soundID)
+            print("SystemSoundID \(listSounds[row].soundID)")
+            switch fromVC {
+                case "CadenceViewController":
+                    defaults.set(listSounds[row].soundID, forKey: CadenceConstants.CADENCE_SOUND_NOTIFICATIONS.rawValue)
+                    defaults.set(row, forKey: CadenceConstants.CADENCE_INDEX_SOUNDS.rawValue)
+                    break
+                case "IntervalViewController":
+                    defaults.set(listSounds[row].soundID, forKey: IntervalConstants.INTERVAL_SOUND_NOTIFICATIONS.rawValue)
+                    defaults.set(row, forKey: IntervalConstants.INTERVAL_INDEX_SOUNDS.rawValue)
+                    break
+                default:
+                    break
+            }
+        }
     }
     
 }
